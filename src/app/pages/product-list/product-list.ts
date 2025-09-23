@@ -1,6 +1,6 @@
 import {Component, computed, inject, Signal} from '@angular/core';
 import {CommonModule} from '@angular/common';
-import {ProductService} from '@core/services/product-service';
+import {ProductService} from '@core/services';
 import {ColumnType, ProductType} from '@core/models';
 import {TableModule, TablePageEvent} from 'primeng/table';
 import {TABLE_CONFIG} from '@core/configs';

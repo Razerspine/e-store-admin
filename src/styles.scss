@@ -17,8 +17,70 @@ body {
   font-style: normal;
 }
 
+.auth-wrapper {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+  width: 100%;
+  min-height: calc(100dvh - (95px + 30px));
+
+  .auth-form {
+    background: #ffffff;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    max-width: 320px;
+    min-height: 400px;
+    padding: 20px 30px;
+    margin: 0 auto;
+    border-radius: var(--p-form-field-border-radius);
+    @media screen and (min-width: 768px) {
+      max-width: 380px;
+      padding: 20px 40px;
+    }
+
+    .auth-form-title {
+      color: var(--p-select-color);
+      font-size: 32px;
+      font-weight: 700;
+      text-align: center;
+      width: 100%;
+      margin: 0 0 15px 0;
+    }
+
+    .auth-form-row {
+      display: block;
+      width: 100%;
+      padding: 10px 0;
+
+      .button {
+        .p-button {
+          width: 100%;
+        }
+      }
+    }
+
+    .auth-form-link {
+      color: var(--p-primary-color);
+      font-size: 18px;
+      text-align: center;
+      display: block;
+      width: 100%;
+      padding: 10px 15px;
+      margin-top: 25px;
+    }
+  }
+}
+
 .p-dark {
   body {
     background: var(--p-zinc-950);
+  }
+
+  .auth-form {
+    background: var(--p-zinc-900);
   }
 }

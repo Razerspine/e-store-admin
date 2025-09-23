@@ -1,1 +1,17 @@
-<p>register works!</p>
+<div class="auth-wrapper">
+  <form class="auth-form" [formGroup]="form">
+    <div class="auth-form-row">
+      <p class="auth-form-title">Registration</p>
+    </div>
+    <p-iconfield class="auth-form-row" iconPosition="right">
+      <input class="input" formControlName="email" pInputText type="email" placeholder="Enter your email" pSize="large" fluid/>
+      <p-inputicon class="pi pi-user"/>
+    </p-iconfield>
+    <p-icon-field class="auth-form-row" iconPosition="right">
+      <p-password class="input" formControlName="password" placeholder="Enter password" [toggleMask]="true" size="large" fluid/>
+    </p-icon-field>
+    <div class="auth-form-row">
+      <p-button class="button" label="Submit" size="large" [disabled]="form.invalid" (onClick)="register()"/>
+    </div>
+  </form>
+</div>
