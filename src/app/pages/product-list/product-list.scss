@@ -1,0 +1,49 @@
+.table-container {
+  display: block;
+  width: 100%;
+  height: auto;
+  white-space: nowrap;
+
+  .no-wrap-column {
+    white-space: nowrap;
+  }
+
+  .table-caption {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+    width: 100%;
+    padding: 10px 0;
+    @media screen and (min-width: 768px) {
+      flex-direction: row;
+      justify-content: space-between;
+      height: 60px;
+    }
+
+    .row-selection {
+      width: 100%;
+      @media screen and (min-width: 768px) {
+        width: auto;
+      }
+
+      .row-container {
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+
+        .row-text {
+          font-weight: 700;
+          margin: 0 5px 0 0;
+        }
+      }
+    }
+
+    .table-search {
+      width: 100%;
+      @media screen and (min-width: 768px) {
+        width: auto;
+      }
+    }
+  }
+}
