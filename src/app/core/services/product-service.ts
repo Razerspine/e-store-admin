@@ -3,6 +3,7 @@ import {HttpClient, HttpParams} from '@angular/common/http';
 import {ProductFiltersType, ProductType} from '@core/models';
 import {environment} from '../../../environments/environment';
 import {PaginatorType} from '@core/models/paginator-type';
+import {Observable} from 'rxjs';
 
 type ProductResponse = {
   items: ProductType[];
@@ -41,5 +42,9 @@ export class ProductService {
         console.error(error);
       }
     });
+  }
+
+  getProductByUuid(uuid: string): Observable<ProductType> {
+    return this.http.get<ProductType>(`${environment.apiBaseUrl}/api/public/products/${uuid}`);
   }
 }

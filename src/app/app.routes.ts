@@ -1,5 +1,6 @@
 import {Routes} from '@angular/router';
 import {AuthGuard} from '@core/guards';
+import {ProductResolver} from '@core/services';
 
 export const routes: Routes = [
   {
@@ -17,7 +18,10 @@ export const routes: Routes = [
     title: 'Product details',
     path: 'products/:uuid',
     loadComponent: () => import('@pages/product/product').then(m => m.Product),
-    canActivate: [AuthGuard]
+    canActivate: [AuthGuard],
+    resolve: {
+      product: ProductResolver
+    }
   },
   {
     title: 'Login',

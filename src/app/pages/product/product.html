@@ -1,1 +1,7 @@
-<p>product works!</p>
+<div class="form-wrapper">
+  <form class="product-form" [formGroup]="form">
+    <app-localization-form-tabs [title]="'Product name'" [formArray]="nameArray"/>
+    <app-localization-form-tabs [title]="'Product description'" [formArray]="descriptionArray"/>
+    <app-currencies-form-tabs [title]="'Product price'" [formArray]="priceArray"/>
+  </form>
+</div>

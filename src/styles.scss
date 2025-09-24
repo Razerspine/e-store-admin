@@ -6,7 +6,7 @@
 
 body {
   background: var(--p-gray-100);
-  color: var(--p-surface-0);
+  color: var(--p-select-color);
   width: 100%;
   margin: 0;
   padding: 0;
@@ -78,6 +78,7 @@ body {
 .p-dark {
   body {
     background: var(--p-zinc-950);
+    color: var(--p-surface-0);
   }
 
   .auth-form {

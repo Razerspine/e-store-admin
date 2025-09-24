@@ -1,0 +1,21 @@
+<div class="tabs-wrapper">
+  <p class="tabs-title">{{ title() }}</p>
+  <p-tabs value="USD" scrollable>
+    <p-tablist>
+      @for (tab of currencies; track tab.key) {
+        <p-tab [value]="tab.key">
+          {{ tab.key }}
+        </p-tab>
+      }
+    </p-tablist>
+    <p-tabpanels>
+      @for (tab of currencies; track tab.key; let i = $index) {
+        <p-tabpanel [value]="tab.key">
+          <div [formGroup]="getGroup(i)">
+            <input pInputText min="0" type="number" [formControlName]="tab.key" [placeholder]="tab.key" pSize="large" fluid/>
+          </div>
+        </p-tabpanel>
+      }
+    </p-tabpanels>
+  </p-tabs>
+</div>

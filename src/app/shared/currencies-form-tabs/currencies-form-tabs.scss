@@ -1,0 +1,15 @@
+.tabs-wrapper {
+  display: block;
+  width: 100%;
+  margin-bottom: 20px;
+
+  .tabs-title {
+    color: var(--p-select-color);
+    font-size: 18px;
+    font-weight: 700;
+    margin: 0 0 15px 0;
+    @media screen and (min-width: 768px) {
+      font-size: 20px;
+    }
+  }
+}
