@@ -1,32 +1,42 @@
 import {Component, inject} from '@angular/core';
 import {CommonModule} from '@angular/common';
-import {ActivatedRoute, Router} from '@angular/router';
-import {FormArray, FormBuilder, ReactiveFormsModule} from '@angular/forms';
+import {ActivatedRoute} from '@angular/router';
+import {FormArray, FormBuilder, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
 import {ProductFormType, ProductType} from '@core/models';
 import {productMapper} from '@core/mappers';
-import {CURRENCY_CONFIG, LANGUAGES_CONFIG} from '@core/configs';
-import {CurrenciesFormTabs, LocalizationFormTabs} from '@app/shared';
+import {CATEGORIES_CONFIG, CURRENCY_CONFIG, LANGUAGES_CONFIG} from '@core/configs';
+import {CurrenciesFormTabs, ImageUploader, LocalizationFormTabs} from '@app/shared';
+import {InputText} from 'primeng/inputtext';
+import {Select} from 'primeng/select';
+import {ToggleSwitch} from 'primeng/toggleswitch';
+import {Button} from 'primeng/button';
+import {FormattingFormData} from '@core/utils';
+import {ProductService} from '@core/services';
 
 @Component({
   selector: 'app-product',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, LocalizationFormTabs, CurrenciesFormTabs],
+  imports: [CommonModule, ReactiveFormsModule, LocalizationFormTabs, CurrenciesFormTabs, InputText, Select, ToggleSwitch, ImageUploader, Button],
   templateUrl: './product.html',
   styleUrl: './product.scss'
 })
 export class Product {
-  private router = inject(Router);
   private route = inject(ActivatedRoute);
   private fb = inject(FormBuilder);
+  private productService = inject(ProductService);
+  protected readonly CATEGORIES_CONFIG = CATEGORIES_CONFIG;
   form = this.fb.group({
     uuid: [''],
     name: this.fb.array([]),
     description: this.fb.array([]),
-    category: [''],
+    category: ['all'],
     price: this.fb.array([]),
     sku: [''],
-    images: this.fb.array([]),
-    isActive: [false]
+    image: this.fb.group({
+      url: [''],
+      publicId: [''],
+    }),
+    isActive: [true]
   });
 
   constructor() {
@@ -38,8 +48,8 @@ export class Product {
     }
   }
 
-  get imagesArray() {
-    return this.form.get('images') as FormArray;
+  imageGroup() {
+    return this.form.get('image') as FormGroup;
   }
 
   get nameArray() {
@@ -56,16 +66,6 @@ export class Product {
 
   patchForm(data: ProductType): void {
     const formData = productMapper(data, true) as ProductFormType;
-    const imagesArray = this.imagesArray;
-    if (formData.images?.length > 0) {
-      formData.images.forEach(image => {
-        const imageGroup = this.fb.group({
-          url: [image.url],
-          publicId: [image.publicId],
-        });
-        imagesArray.push(imageGroup);
-      });
-    }
     this.form?.patchValue(formData);
     console.log("AFTER PATCH: ", this.form.value);
   }
@@ -75,14 +75,24 @@ export class Product {
     const descriptionArray = this.descriptionArray;
     const priceArray = this.priceArray;
     LANGUAGES_CONFIG.forEach((lang) => {
-      const nameGroup = this.fb.group({[lang.key]: ['']});
-      const descriptionGroup = this.fb.group({[lang.key]: ['']});
+      const nameGroup = this.fb.group({[lang.key]: ['', lang.isDefault ? Validators.required : null]});
+      const descriptionGroup = this.fb.group({[lang.key]: ['', lang.isDefault ? Validators.required : null]});
       nameArray.push(nameGroup);
       descriptionArray.push(descriptionGroup);
     });
-    CURRENCY_CONFIG.forEach((currency) => {
-      const priceGroup = this.fb.group({[currency.key]: [null]});
+    CURRENCY_CONFIG.forEach((curr) => {
+      const priceGroup = this.fb.group({[curr.key]: [null, curr.isDefault ? Validators.required : null]});
       priceArray.push(priceGroup);
     });
+  }
+
+  save(): void {
+    const formData = FormattingFormData(this.form);
+    const product = productMapper(formData, false) as ProductType;
+    if (product.uuid && product.uuid !== 'new') {
+      this.productService.updateProduct(product.uuid, product);
+    } else {
+      this.productService.createProduct(product);
+    }
   }
 }

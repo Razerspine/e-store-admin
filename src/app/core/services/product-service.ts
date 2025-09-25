@@ -4,6 +4,7 @@ import {ProductFiltersType, ProductType} from '@core/models';
 import {environment} from '../../../environments/environment';
 import {PaginatorType} from '@core/models/paginator-type';
 import {Observable} from 'rxjs';
+import {Router} from '@angular/router';
 
 type ProductResponse = {
   items: ProductType[];
@@ -15,6 +16,7 @@ type ProductResponse = {
 })
 export class ProductService {
   private http = inject(HttpClient);
+  private router = inject(Router);
   products: WritableSignal<ProductType[]> = signal([]);
   paginator: WritableSignal<PaginatorType> = signal({
     limit: 20,
@@ -46,5 +48,44 @@ export class ProductService {
 
   getProductByUuid(uuid: string): Observable<ProductType> {
     return this.http.get<ProductType>(`${environment.apiBaseUrl}/api/public/products/${uuid}`);
+  }
+
+  updateProduct(uuid: string, changes: Partial<ProductType>): void {
+    this.http.patch<ProductType>(`${environment.apiBaseUrl}/api/private/products/${uuid}`, changes)
+      .subscribe({
+        next: response => {
+          console.log(response);
+          this.getProducts({});
+          this.router.navigate(['/products']).then();
+        }
+      });
+  }
+
+  createProduct(product: ProductType): void {
+    this.http.post(`${environment.apiBaseUrl}/api/private/products`, product)
+      .subscribe({
+        next: response => {
+          console.log(response);
+          this.getProducts({});
+          this.router.navigate(['/products']).then();
+        },
+        error: error => {
+          console.error(error);
+        }
+      })
+  }
+
+  deleteProduct(uuid: string): void {
+    this.http.delete(`${environment.apiBaseUrl}/api/private/products/${uuid}`)
+      .subscribe({
+        next: response => {
+          console.log(response);
+          this.getProducts({});
+          this.router.navigate(['products']).then();
+        },
+        error: error => {
+          console.error(error);
+        }
+      })
   }
 }

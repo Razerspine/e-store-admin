@@ -5,6 +5,6 @@ export type ProductType = {
   category: string;
   price: Record<string, number>;
   sku: string;
-  images: Array<{ url: string; publicId: string }>;
+  image: { url: string ; publicId: string };
   isActive: boolean;
 }

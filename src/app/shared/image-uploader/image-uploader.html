@@ -1,0 +1,15 @@
+<div class="image-uploader">
+  @if (imageGroup().get('url')?.value?.length) {
+    <div class="preview-image">
+      <img loading="lazy" class="image-preview" [src]="imageGroup().get('url')?.value" alt="image"/>
+      <p-button class="remove-image" text icon="pi pi-trash" severity="primary" (click)="removeImage(fileInput)"/>
+    </div>
+  }
+  <label for="file-upload" class="file-upload-container">Choose File</label>
+  <input id="file-upload" #fileInput class="file-input" type="file" accept="image/*" (change)="onFileSelected($event)"/>
+  @if (isLoading()) {
+    <div class="spinner-wrapper">
+      <p-progress-spinner ariaLabel="loading" />
+    </div>
+  }
+</div>

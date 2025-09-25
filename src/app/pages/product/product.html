@@ -1,7 +1,42 @@
 <div class="form-wrapper">
   <form class="product-form" [formGroup]="form">
-    <app-localization-form-tabs [title]="'Product name'" [formArray]="nameArray"/>
-    <app-localization-form-tabs [title]="'Product description'" [formArray]="descriptionArray"/>
-    <app-currencies-form-tabs [title]="'Product price'" [formArray]="priceArray"/>
+    <div class="top-row">
+      <div class="uuid">
+        <p class="form-row-label inline no-margin">UUID: {{ form.get('uuid')?.value ?? 'new' }}</p>
+      </div>
+      <div class="active-row">
+        <p-toggleswitch formControlName="isActive"/>
+        <p class="form-row-label inline no-margin">Is Active</p>
+      </div>
+    </div>
+    <div class="form-section">
+      <div class="form-column">
+        <p class="form-row-label">Product image</p>
+        <app-image-uploader [imageGroup]="imageGroup()"/>
+      </div>
+      <div class="form-column">
+        <div class="form-row">
+          <label for="sku" class="form-row-label">Sku</label>
+          <input id="sku" pInputText type="text" formControlName="sku" fluid/>
+        </div>
+        <div class="form-row">
+          <p class="form-row-label">Category</p>
+          <p-select [options]="CATEGORIES_CONFIG" formControlName="category" fluid/>
+        </div>
+        <app-localization-form-tabs [title]="'Product name'" [formArray]="nameArray"/>
+        <app-localization-form-tabs [title]="'Product description'" [formArray]="descriptionArray"/>
+        <app-currencies-form-tabs [title]="'Product price'" [formArray]="priceArray"/>
+      </div>
+    </div>
   </form>
+  <div class="button-row">
+    <p-button [style]="{'min-width': '120px'}"
+              [disabled]="form.invalid"
+              severity="primary"
+              size="large"
+              label="Save"
+              icon="pi pi-save"
+              (onClick)="save()"
+    />
+  </div>
 </div>
