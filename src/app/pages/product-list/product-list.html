@@ -14,7 +14,7 @@
   >
     <ng-template #caption>
       <div class="table-caption">
-        <div class="row-selection">
+        <div class="top-column">
           @if (selectedProducts && selectedProducts.length > 0) {
             <div class="row-container">
               <p class="row-text">{{ "Selected: " }}{{ selectedProducts.length }}</p>
@@ -22,13 +22,23 @@
             </div>
           }
         </div>
-        <p-iconfield iconPosition="left" class="table-search">
-          <p-inputicon>
-            <i class="pi pi-search"></i>
-          </p-inputicon>
-          <input pInputText type="text" (input)="onInput($event)" (keyup.enter)="onSearch($event)"
-                 placeholder="Search"/>
-        </p-iconfield>
+        <div class="top-column">
+          <p-iconfield iconPosition="left" class="search-wrapper">
+            <p-inputicon>
+              <i class="pi pi-search"></i>
+            </p-inputicon>
+            <input pInputText
+                   type="text"
+                   (input)="onInput($event)"
+                   (keyup.enter)="onSearch($event)"
+                   placeholder="Search"
+                   class="search-input"
+            />
+          </p-iconfield>
+        </div>
+        <div class="top-column">
+          <p-button icon="pi pi-plus" label="Add product" severity="primary" (onClick)="changeRoute()"/>
+        </div>
       </div>
     </ng-template>
     <ng-template #header let-columns>

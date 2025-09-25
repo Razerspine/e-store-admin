@@ -71,4 +71,8 @@ export class ProductList {
   showDetails(row: ProductType) {
     this.router.navigate([`/products/${row.uuid}`]).then();
   }
+
+  changeRoute(): void {
+    this.router.navigate([`/products/new`]).then();
+  }
 }
