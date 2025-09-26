@@ -26,7 +26,6 @@ export class Login {
 
   login(): void {
     const formData = this.form.value;
-    console.log(formData);
     this.authService.login(formData);
   }
 }

@@ -35,7 +35,7 @@ export class ProductService {
       .set('active', active ?? true)
       .set('page', page ?? 1)
       .set('limit', limit ?? 20);
-    this.http.get<ProductResponse>(`${environment.apiBaseUrl}/api/public/products?${params.toString()}`).subscribe({
+    this.http.get<ProductResponse>(`${environment.apiBaseUrl}/api/private/products?${params.toString()}`).subscribe({
       next: response => {
         this.products.set(response?.items ?? []);
         this.paginator.set(response?.meta);
@@ -47,7 +47,7 @@ export class ProductService {
   }
 
   getProductByUuid(uuid: string): Observable<ProductType> {
-    return this.http.get<ProductType>(`${environment.apiBaseUrl}/api/public/products/${uuid}`);
+    return this.http.get<ProductType>(`${environment.apiBaseUrl}/api/private/products/${uuid}`);
   }
 
   updateProduct(uuid: string, changes: Partial<ProductType>): void {
@@ -81,7 +81,6 @@ export class ProductService {
         next: response => {
           console.log(response);
           this.getProducts({});
-          this.router.navigate(['products']).then();
         },
         error: error => {
           console.error(error);
