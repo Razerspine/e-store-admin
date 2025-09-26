@@ -1,9 +1,10 @@
-import {Component, input, InputSignal} from '@angular/core';
+import {Component, inject, input, InputSignal} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {FormArray, FormGroup, ReactiveFormsModule} from '@angular/forms';
 import {Tab, TabList, TabPanel, TabPanels, Tabs} from 'primeng/tabs';
 import {LANGUAGES_CONFIG} from '@core/configs';
 import {InputText} from 'primeng/inputtext';
+import {SharedDataService} from '@core/services';
 
 @Component({
   selector: 'app-localization-form-tabs',
@@ -15,7 +16,8 @@ import {InputText} from 'primeng/inputtext';
 export class LocalizationFormTabs {
   formArray: InputSignal<FormArray> = input.required();
   title: InputSignal<string> = input.required();
-  languages = LANGUAGES_CONFIG;
+  sharedService = inject(SharedDataService);
+  languages = this.sharedService.data().languages;
 
   getGroup(index: number): FormGroup {
     return this.formArray().at(index) as FormGroup;

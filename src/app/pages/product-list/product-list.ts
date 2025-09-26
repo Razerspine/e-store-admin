@@ -1,9 +1,8 @@
 import {Component, computed, inject, Signal} from '@angular/core';
 import {CommonModule} from '@angular/common';
-import {ProductService} from '@core/services';
+import {ProductService, SharedDataService} from '@core/services';
 import {ColumnType, ProductType} from '@core/models';
 import {TableModule, TablePageEvent} from 'primeng/table';
-import {TABLE_CONFIG} from '@core/configs';
 import {PaginatorType} from '@core/models/paginator-type';
 import {Button} from 'primeng/button';
 import {IconField} from 'primeng/iconfield';
@@ -12,6 +11,7 @@ import {InputText} from 'primeng/inputtext';
 import {ConfirmationService, MessageService} from 'primeng/api';
 import {ConfirmPopup} from 'primeng/confirmpopup';
 import {Router} from '@angular/router';
+import {getTableConfig} from '@core/utils';
 
 @Component({
   selector: 'app-product-list',
@@ -25,9 +25,10 @@ export class ProductList {
   private messageService = inject(MessageService);
   private productService = inject(ProductService);
   private router = inject(Router);
+  sharedService = inject(SharedDataService);
   data: Signal<ProductType[]> = computed(() => this.productService.products());
   pagination: Signal<PaginatorType> = computed(() => this.productService.paginator());
-  columns: ColumnType[] = TABLE_CONFIG;
+  columns: ColumnType[] = getTableConfig(this.sharedService.data().defaultLanguage, this.sharedService.data().defaultCurrency);
   selectedProducts: ProductType[] = [];
 
   onPageChange(event: TablePageEvent) {

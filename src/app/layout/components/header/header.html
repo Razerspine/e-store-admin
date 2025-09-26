@@ -4,7 +4,11 @@
     <p-button icon="pi pi-home" text severity="primary" routerLink="/"/>
   </ng-template>
   <ng-template #end>
-    <p-button [icon]="theme === 'dark' ? 'pi pi-moon': 'pi pi-sun'" text severity="primary" (onClick)="toggleTheme()"/>
-    <p-select [options]="languages" [(ngModel)]="selectedLanguage"/>
+    <p-button [icon]="theme() === 'dark' ? 'pi pi-moon': 'pi pi-sun'" text severity="primary" (onClick)="toggleTheme()"/>
+    <p-select [options]="sharedService.data().languages"
+              optionLabel="label"
+              optionValue="key"
+              [(ngModel)]="selectedLanguage"
+    />
   </ng-template>
 </p-toolbar>

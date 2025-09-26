@@ -21,7 +21,7 @@
         </div>
         <div class="form-row">
           <p class="form-row-label">Category</p>
-          <p-select [options]="CATEGORIES_CONFIG" formControlName="category" fluid/>
+          <p-select [options]="sharedService.data()?.categories" formControlName="category" fluid/>
         </div>
         <app-localization-form-tabs [title]="'Product name'" [formArray]="nameArray"/>
         <app-localization-form-tabs [title]="'Product description'" [formArray]="descriptionArray"/>
