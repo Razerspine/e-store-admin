@@ -1,21 +1,19 @@
-@if (user()) {
-  <div class="menu-wrapper">
-    <div class="menu-row">
-      <span class="menu-title">Email: </span>
-      <span class="menu-text">{{ user()?.email }}</span>
-    </div>
-    <div class="menu-row">
-      <span class="menu-title">Role: </span>
-      <span class="menu-text">{{ user()?.role }}</span>
-    </div>
-    <div class="button-row">
-      <p-button text
-                icon="pi pi-sign-out"
-                label="logout"
-                severity="primary"
-                (onClick)="onLogout()"
-                [style]="{'min-width': '150px'}"
-      />
-    </div>
+<div class="menu-wrapper">
+  <div class="menu-row">
+    <span class="menu-title">Email: </span>
+    <span class="menu-text">{{ user().email }}</span>
   </div>
-}
+  <div class="menu-row">
+    <span class="menu-title">Role: </span>
+    <span class="menu-text">{{ user().role }}</span>
+  </div>
+  <div class="button-row">
+    <p-button text
+              icon="pi pi-sign-out"
+              label="logout"
+              severity="primary"
+              (onClick)="onLogout()"
+              [style]="{'min-width': '150px'}"
+    />
+  </div>
+</div>
