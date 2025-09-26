@@ -19,8 +19,8 @@ export class AuthService {
   private http = inject(HttpClient);
   private messageService = inject(MessageService);
   private router = inject(Router);
-  user: WritableSignal<UserType | null> = signal(null);
   isLoggedIn: WritableSignal<boolean> = signal(!!this.getToken());
+  user: WritableSignal<UserType> = signal({email: '', role: ''});
 
   login(params: { email: string; password: string }): void {
     this.http.post<UserResponse>(`${environment.apiBaseUrl}/api/auth/login`, params).subscribe({
@@ -32,8 +32,8 @@ export class AuthService {
             detail: 'Login success! Welcome back!',
             life: 3000
           });
-          this.user.set(response.user);
           localStorage.setItem(JWT_TOKEN, response.token);
+          this.user.set(response.user);
           this.isLoggedIn.set(true);
           this.router.navigate(['/']).then();
         }
@@ -54,8 +54,8 @@ export class AuthService {
             detail: 'Registration success! Enjoy!',
             life: 3000
           });
-          this.user.set(response.user);
           localStorage.setItem(JWT_TOKEN, response.token);
+          this.user.set(response.user);
           this.isLoggedIn.set(true);
           this.router.navigate(['/']).then();
         }
@@ -72,6 +72,7 @@ export class AuthService {
 
   logout(): void {
     localStorage.removeItem(JWT_TOKEN);
+    this.user.set({email: '', role: ''});
     this.isLoggedIn.set(false);
     this.messageService.add({
       severity: 'success',
@@ -79,5 +80,20 @@ export class AuthService {
       detail: 'Logout success! Come back as soon as possible!',
       life: 3000
     });
+    this.router.navigate(['/login']);
+  }
+
+  userInfo() {
+    this.http.get<{ user: UserType }>(`${environment.apiBaseUrl}/api/auth/user-info`)
+      .subscribe({
+        next: response => {
+          if (response && response.user) {
+            this.user.set(response.user);
+          }
+        },
+        error: error => {
+          console.error(error);
+        }
+      });
   }
 }

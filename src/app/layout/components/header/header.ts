@@ -1,23 +1,33 @@
-import {Component, inject, OnInit, signal, WritableSignal} from '@angular/core';
+import {Component, inject, signal, WritableSignal} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {Toolbar} from 'primeng/toolbar';
 import {FormsModule} from '@angular/forms';
 import {Button} from 'primeng/button';
 import {RouterLink} from '@angular/router';
-import {SharedDataService} from '@core/services';
+import {AuthService, SharedDataService} from '@core/services';
 import {Popover} from 'primeng/popover';
+import {UserInfo} from '@shared/user-info/user-info';
+import {LanguageType} from '@core/models';
 
 @Component({
   selector: 'app-header',
   standalone: true,
-  imports: [CommonModule, Toolbar, FormsModule, Button, RouterLink, Popover],
+  imports: [CommonModule, Toolbar, FormsModule, Button, RouterLink, Popover, UserInfo],
   templateUrl: './header.html',
   styleUrl: './header.scss'
 })
 export class Header {
+  authService = inject(AuthService);
   sharedService = inject(SharedDataService);
-  selectedLanguage = signal(this.sharedService.data().defaultLanguage);
+  selectedLanguage: WritableSignal<LanguageType> = signal(this.sharedService.data().defaultLanguage);
   icon: WritableSignal<'pi pi-moon' | 'pi pi-sun'> = signal('pi pi-moon');
+
+  constructor() {
+    if (!this.authService.isLoggedIn()) {
+      return;
+    }
+    this.authService.userInfo();
+  }
 
   toggleTheme(): void {
     const element = document.querySelector('html');
@@ -27,5 +37,11 @@ export class Header {
 
   onSelected(lang: any): void {
     this.selectedLanguage.set(lang);
+  }
+
+  logout(event: boolean) {
+    if (event) {
+      this.authService.logout();
+    }
   }
 }

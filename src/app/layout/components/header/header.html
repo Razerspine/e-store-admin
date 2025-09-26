@@ -1,6 +1,5 @@
 <p-toolbar class="p-toolbar">
   <ng-template #start>
-<!--    <p-button icon="pi pi-bars" text severity="primary"/>-->
     <p-button icon="pi pi-home" text severity="primary" routerLink="/"/>
   </ng-template>
   <ng-template #end>
@@ -10,6 +9,16 @@
               severity="primary"
               (onClick)="toggleTheme()"
     />
+    <p-button type="button"
+              icon="pi pi-user"
+              text
+              severity="primary"
+              (click)="userTemplate.toggle($event)"
+              [disabled]="!authService.isLoggedIn()"
+    />
+    <p-popover #userTemplate>
+      <app-user-info [user]="authService.user()" (logout)="logout($event)"/>
+    </p-popover>
     <p-button type="button"
               text
               icon="pi pi-language"

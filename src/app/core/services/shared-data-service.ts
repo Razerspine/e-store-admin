@@ -26,7 +26,7 @@ export class SharedDataService {
     defaultLanguage: this.fallBackLanguages[0],
     currencies: this.fallBackCurrencies,
     defaultCurrency: this.fallBackCurrencies[0],
-    categories: []
+    categories: this.fallBackCategories
   });
 
   constructor() {
