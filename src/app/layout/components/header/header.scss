@@ -18,3 +18,30 @@
     border: none;
   }
 }
+
+.dropdown {
+  display: flex;
+  align-items: flex-start;
+  flex-direction: column;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+  width: auto;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+
+  .dropdown-item {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    min-width: 50px;
+    padding: 6px 8px;
+    cursor: pointer;
+
+    &.selected {
+      color: var(--p-primary-color);
+      pointer-events: none;
+      cursor: default;
+    }
+  }
+}

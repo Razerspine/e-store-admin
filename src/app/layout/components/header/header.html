@@ -1,14 +1,33 @@
 <p-toolbar class="p-toolbar">
   <ng-template #start>
-    <p-button icon="pi pi-bars" text severity="primary"/>
+<!--    <p-button icon="pi pi-bars" text severity="primary"/>-->
     <p-button icon="pi pi-home" text severity="primary" routerLink="/"/>
   </ng-template>
   <ng-template #end>
-    <p-button [icon]="theme() === 'dark' ? 'pi pi-moon': 'pi pi-sun'" text severity="primary" (onClick)="toggleTheme()"/>
-    <p-select [options]="sharedService.data().languages"
-              optionLabel="label"
-              optionValue="key"
-              [(ngModel)]="selectedLanguage"
+    <p-button [icon]="icon()"
+              type="button"
+              text
+              severity="primary"
+              (onClick)="toggleTheme()"
     />
+    <p-button type="button"
+              text
+              icon="pi pi-language"
+              (click)="languagesTemplate.toggle($event)"
+              [label]="selectedLanguage().label"
+              [style]="{'min-width': '90px'}"
+    />
+    <p-popover #languagesTemplate>
+      <ul class="dropdown">
+        @for (lang of sharedService.data().languages; track lang.key) {
+          <li class="dropdown-item"
+              (click)="onSelected(lang); languagesTemplate.hide()"
+              [ngClass]="{'selected': selectedLanguage().key === lang.key}"
+          >
+            {{ lang.label }}
+          </li>
+        }
+      </ul>
+    </p-popover>
   </ng-template>
 </p-toolbar>

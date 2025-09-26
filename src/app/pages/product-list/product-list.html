@@ -37,7 +37,7 @@
           </p-iconfield>
         </div>
         <div class="top-column">
-          <p-button icon="pi pi-plus" label="Add product" severity="primary" (onClick)="changeRoute()"/>
+          <p-button icon="pi pi-plus" label="Add Product" severity="primary" (onClick)="changeRoute()"/>
         </div>
       </div>
     </ng-template>
@@ -66,7 +66,7 @@
           <div class="table-actions">
             <p-confirmpopup/>
             <p-button icon="pi pi-eye" text severity="info" (onClick)="showDetails(rowData)"/>
-            <p-button icon="pi pi-trash" text severity="danger" (onClick)="onDelete($event)"/>
+            <p-button icon="pi pi-trash" text severity="danger" (onClick)="onDelete($event, rowData)"/>
           </div>
         </td>
       </tr>

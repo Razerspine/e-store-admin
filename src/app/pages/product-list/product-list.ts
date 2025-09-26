@@ -22,7 +22,6 @@ import {getTableConfig} from '@core/utils';
 })
 export class ProductList {
   private confirmationService = inject(ConfirmationService);
-  private messageService = inject(MessageService);
   private productService = inject(ProductService);
   private router = inject(Router);
   sharedService = inject(SharedDataService);
@@ -49,7 +48,7 @@ export class ProductList {
     }
   }
 
-  onDelete(event: Event): void {
+  onDelete(event: Event, rowData: ProductType): void {
     this.confirmationService.confirm({
       target: event.currentTarget as EventTarget,
       message: 'Are you sure you want delete this product?',
@@ -64,7 +63,7 @@ export class ProductList {
         severity: 'danger',
       },
       accept: () => {
-        this.messageService.add({severity: 'info', summary: 'Confirmed', detail: 'You have accepted', life: 3000});
+        this.productService.deleteProduct(rowData.uuid);
       }
     });
   }

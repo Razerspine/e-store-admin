@@ -5,6 +5,7 @@ import {environment} from '../../../environments/environment';
 import {PaginatorType} from '@core/models/paginator-type';
 import {Observable} from 'rxjs';
 import {Router} from '@angular/router';
+import {MessageService} from 'primeng/api';
 
 type ProductResponse = {
   items: ProductType[];
@@ -17,6 +18,7 @@ type ProductResponse = {
 export class ProductService {
   private http = inject(HttpClient);
   private router = inject(Router);
+  private messageService = inject(MessageService);
   products: WritableSignal<ProductType[]> = signal([]);
   paginator: WritableSignal<PaginatorType> = signal({
     limit: 20,
@@ -80,6 +82,12 @@ export class ProductService {
       .subscribe({
         next: response => {
           console.log(response);
+          this.messageService.add({
+            severity: 'success',
+            summary: 'Success!',
+            detail: `Product UUID: ${uuid} deleted successfully!`,
+            life: 3000
+          });
           this.getProducts({});
         },
         error: error => {
