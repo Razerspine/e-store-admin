@@ -8,15 +8,17 @@ import {Button} from 'primeng/button';
 import {IconField} from 'primeng/iconfield';
 import {InputIcon} from 'primeng/inputicon';
 import {InputText} from 'primeng/inputtext';
-import {ConfirmationService, MessageService} from 'primeng/api';
+import {ConfirmationService} from 'primeng/api';
 import {ConfirmPopup} from 'primeng/confirmpopup';
 import {Router} from '@angular/router';
 import {getTableConfig} from '@core/utils';
+import {FormControl, FormsModule, ReactiveFormsModule} from '@angular/forms';
+import {debounceTime, distinctUntilChanged} from 'rxjs';
 
 @Component({
   selector: 'app-product-list',
   standalone: true,
-  imports: [CommonModule, TableModule, Button, IconField, InputIcon, InputText, ConfirmPopup],
+  imports: [CommonModule, TableModule, Button, IconField, InputIcon, InputText, ConfirmPopup, FormsModule, ReactiveFormsModule],
   templateUrl: './product-list.html',
   styleUrl: './product-list.scss'
 })
@@ -29,23 +31,29 @@ export class ProductList {
   pagination: Signal<PaginatorType> = computed(() => this.productService.paginator());
   columns: ColumnType[] = getTableConfig(this.sharedService.data().defaultLanguage, this.sharedService.data().defaultCurrency);
   selectedProducts: ProductType[] = [];
+  searchInput = new FormControl('');
+
+  constructor() {
+    this.searchInput.valueChanges
+      .pipe(
+        debounceTime(700),
+        distinctUntilChanged()
+      )
+      .subscribe({
+        next: value => {
+          if (value) {
+            this.productService.getProducts({search: value});
+          } else {
+            this.productService.getProducts({});
+          }
+        }
+      })
+  }
 
   onPageChange(event: TablePageEvent) {
     const {first, rows} = event;
     const page = Math.floor(first / rows) + 1;
     this.productService.getProducts({page: page, limit: rows});
-  }
-
-  onSearch(event: Event): void {
-    const inputSearch = event.target as HTMLInputElement;
-    this.productService.getProducts({search: inputSearch?.value});
-  }
-
-  onInput(event: Event): void {
-    const inputSearch = event.target as HTMLInputElement;
-    if (inputSearch.value === '') {
-      this.productService.getProducts({});
-    }
   }
 
   onDelete(event: Event, rowData: ProductType): void {

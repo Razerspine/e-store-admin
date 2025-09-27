@@ -29,10 +29,9 @@
             </p-inputicon>
             <input pInputText
                    type="text"
-                   (input)="onInput($event)"
-                   (keyup.enter)="onSearch($event)"
                    placeholder="Search"
                    class="search-input"
+                   [formControl]="searchInput"
             />
           </p-iconfield>
         </div>
