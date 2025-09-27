@@ -2,7 +2,6 @@ import {Component, inject, input, InputSignal} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {FormArray, FormGroup, ReactiveFormsModule} from '@angular/forms';
 import {Tab, TabList, TabPanel, TabPanels, Tabs} from 'primeng/tabs';
-import {LANGUAGES_CONFIG} from '@core/configs';
 import {InputText} from 'primeng/inputtext';
 import {SharedDataService} from '@core/services';
 import {Editor} from 'primeng/editor';

@@ -51,6 +51,7 @@ export class ImageUploader {
     if (publicId) {
       this.fileService.delete(publicId).subscribe({
         next: response => {
+          console.log(response);
           this.imageGroup()?.get('url')?.setValue('');
           this.imageGroup()?.get('publicId')?.setValue('');
           fileInput.value = '';

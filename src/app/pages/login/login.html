@@ -1,17 +1,30 @@
 <div class="auth-wrapper">
-  <form class="auth-form" [formGroup]="form">
+  <form class="auth-form" [formGroup]="form" (submit)="login()">
     <div class="auth-form-row">
       <p class="auth-form-title">Login</p>
     </div>
     <p-iconfield class="auth-form-row" iconPosition="right">
-      <input class="input" formControlName="email" pInputText type="email" placeholder="Email" pSize="large" fluid/>
+      <input class="input"
+             formControlName="email"
+             pInputText
+             type="email"
+             placeholder="Email"
+             pSize="large"
+             fluid
+      />
       <p-inputicon class="pi pi-user"/>
     </p-iconfield>
     <p-icon-field class="auth-form-row" iconPosition="right">
-      <p-password class="input" formControlName="password" placeholder="Password" [toggleMask]="true" size="large" fluid/>
+      <p-password class="input"
+                  formControlName="password"
+                  placeholder="Password"
+                  [toggleMask]="true"
+                  size="large"
+                  fluid
+      />
     </p-icon-field>
     <div class="auth-form-row">
-      <p-button class="button" label="Login" size="large" [disabled]="form.invalid" (onClick)="login()"/>
+      <p-button type="submit" class="button" label="Login" size="large" [disabled]="form.invalid"/>
       <a class="auth-form-link" routerLink="/register">Create account</a>
     </div>
   </form>
