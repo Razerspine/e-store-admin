@@ -20,7 +20,7 @@ export class AuthService {
   private messageService = inject(MessageService);
   private router = inject(Router);
   isLoggedIn: WritableSignal<boolean> = signal(!!this.getToken());
-  user: WritableSignal<UserType> = signal({email: '', role: ''});
+  user: WritableSignal<UserType | null> = signal(null);
 
   login(params: { email: string; password: string }): void {
     this.http.post<UserResponse>(`${environment.apiBaseUrl}/api/auth/login`, params).subscribe({
@@ -72,7 +72,7 @@ export class AuthService {
 
   logout(): void {
     localStorage.removeItem(JWT_TOKEN);
-    this.user.set({email: '', role: ''});
+    this.user.set(null);
     this.isLoggedIn.set(false);
     this.messageService.add({
       severity: 'success',

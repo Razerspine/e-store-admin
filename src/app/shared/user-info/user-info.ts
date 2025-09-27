@@ -11,7 +11,7 @@ import {Button} from 'primeng/button';
   styleUrl: './user-info.scss'
 })
 export class UserInfo {
-  user: InputSignal<UserType> = input.required();
+  user: InputSignal<UserType | null> = input.required();
   logout: OutputEmitterRef<boolean> = output();
 
   onLogout() {
