@@ -13,7 +13,7 @@
         <p-tabpanel [value]="tab.key">
           <div [formGroup]="getGroup(i)">
             @if (editor()) {
-              <p-editor [formControlName]="tab.key" [placeholder]="tab.key" [style]="{ height: '320px' }"/>
+              <p-editor [formControlName]="tab.key" [placeholder]="tab.key" [style]="{ height: '250px' }"/>
             } @else {
               <input pInputText type="text" [formControlName]="tab.key" [placeholder]="tab.key" pSize="large" fluid/>
             }

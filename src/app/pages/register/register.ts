@@ -7,6 +7,7 @@ import {InputText} from 'primeng/inputtext';
 import {Password} from 'primeng/password';
 import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
 import {AuthService} from '@core/services';
+import {matchPasswordValidator} from '@core/validators';
 
 @Component({
   selector: 'app-register',
@@ -21,11 +22,13 @@ export class Register {
   form: FormGroup = this.fb.group({
     email: ['', [Validators.required, Validators.email]],
     password: ['', [Validators.required, Validators.minLength(6)]],
+    confirmPassword: ['', [Validators.required, Validators.minLength(6)]],
     role: ['admin'],
-  });
+  }, {validators: matchPasswordValidator});
 
   register(): void {
     const formData = this.form.value;
+    delete formData.confirmPassword;
     this.authService.register(formData);
   }
 }

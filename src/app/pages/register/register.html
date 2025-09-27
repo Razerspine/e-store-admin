@@ -21,6 +21,17 @@
                   [toggleMask]="true"
                   size="large"
                   fluid
+                  [invalid]="form.invalid"
+      />
+    </p-icon-field>
+    <p-icon-field class="auth-form-row" iconPosition="right">
+      <p-password class="input"
+                  formControlName="confirmPassword"
+                  placeholder="Confirm password"
+                  [toggleMask]="true"
+                  size="large"
+                  fluid
+                  [invalid]="form.invalid"
       />
     </p-icon-field>
     <div class="auth-form-row">
