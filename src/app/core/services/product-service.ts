@@ -44,6 +44,12 @@ export class ProductService {
       },
       error: error => {
         console.error(error);
+        this.messageService.add({
+          severity: 'error',
+          summary: 'Error!',
+          detail: `Error: ${error?.error?.message}`,
+          life: 8000
+        });
       }
     });
   }
@@ -59,6 +65,15 @@ export class ProductService {
           console.log(response);
           this.getProducts({});
           this.router.navigate(['/products']).then();
+        },
+        error: error => {
+          console.error(error);
+          this.messageService.add({
+            severity: 'error',
+            summary: 'Error!',
+            detail: `Error: ${error?.error?.message}`,
+            life: 8000
+          });
         }
       });
   }
@@ -73,6 +88,12 @@ export class ProductService {
         },
         error: error => {
           console.error(error);
+          this.messageService.add({
+            severity: 'error',
+            summary: 'Error!',
+            detail: `Error: ${error?.error?.message}`,
+            life: 8000
+          });
         }
       })
   }
@@ -92,6 +113,12 @@ export class ProductService {
         },
         error: error => {
           console.error(error);
+          this.messageService.add({
+            severity: 'error',
+            summary: 'Error!',
+            detail: `Error: ${error?.error?.message}`,
+            life: 8000
+          });
         }
       })
   }
