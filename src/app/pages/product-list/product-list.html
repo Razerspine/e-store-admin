@@ -18,7 +18,7 @@
           @if (selectedProducts && selectedProducts.length > 0) {
             <div class="row-container">
               <p class="row-text">{{ "Selected: " }}{{ selectedProducts.length }}</p>
-              <p-button icon="pi pi-trash" text severity="danger"/>
+              <p-button icon="pi pi-trash" text severity="danger" (onClick)="onDelete($event, selectedProducts)"/>
             </div>
           }
         </div>
@@ -65,7 +65,7 @@
           <div class="table-actions">
             <p-confirmpopup/>
             <p-button icon="pi pi-eye" text severity="info" (onClick)="showDetails(rowData)"/>
-            <p-button icon="pi pi-trash" text severity="danger" (onClick)="onDelete($event, rowData)"/>
+            <p-button icon="pi pi-trash" text severity="danger" (onClick)="onDelete($event, [rowData])"/>
           </div>
         </td>
       </tr>

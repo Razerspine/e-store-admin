@@ -56,10 +56,12 @@ export class ProductList {
     this.productService.getProducts({page: page, limit: rows});
   }
 
-  onDelete(event: Event, rowData: ProductType): void {
+  onDelete(event: Event, products: ProductType[]): void {
+    if (!Array.isArray(products)) return;
+    const uuids: string[] = products.map(product => product.uuid);
     this.confirmationService.confirm({
       target: event.currentTarget as EventTarget,
-      message: 'Are you sure you want delete this product?',
+      message: 'Are you sure you want delete this selected product/s?',
       icon: 'pi pi-info-circle',
       rejectButtonProps: {
         label: 'Cancel',
@@ -71,7 +73,8 @@ export class ProductList {
         severity: 'danger',
       },
       accept: () => {
-        this.productService.deleteProduct(rowData.uuid);
+        this.selectedProducts = [];
+        this.productService.deleteProducts(uuids);
       }
     });
   }

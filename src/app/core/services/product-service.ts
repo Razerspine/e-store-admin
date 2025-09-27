@@ -103,21 +103,26 @@ export class ProductService {
             life: 8000
           });
         }
-      })
+      });
   }
 
-  deleteProduct(uuid: string): void {
-    this.http.delete(`${environment.apiBaseUrl}/api/private/products/${uuid}`)
+  deleteProducts(uuids: string[]): void {
+    if (!Array.isArray(uuids)) return;
+    this.http.delete<{ message: string }>(`${environment.apiBaseUrl}/api/private/products`, {
+      body: uuids
+    })
       .subscribe({
         next: response => {
           console.log(response);
-          this.messageService.add({
-            severity: 'success',
-            summary: 'Success!',
-            detail: `Product UUID: ${uuid} deleted successfully!`,
-            life: 3000
-          });
-          this.getProducts({});
+          if (response) {
+            this.messageService.add({
+              severity: 'success',
+              summary: 'Success!',
+              detail: `${response?.message}`,
+              life: 3000
+            });
+            this.getProducts({});
+          }
         },
         error: error => {
           console.error(error);
