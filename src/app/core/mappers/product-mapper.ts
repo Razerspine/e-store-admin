@@ -9,7 +9,7 @@ export const productMapper = (data: ProductType | ProductFormType, toForm: boole
     category: data.category,
     price: toForm ? objectToArray((data as ProductType).price) : arrayToObject((data as ProductFormType).price),
     sku: data.sku,
-    image: data.image,
+    image: data.image?.url && data.image?.publicId ? data.image : null,
     isActive: data.isActive,
   } as ProductType | ProductFormType;
 }

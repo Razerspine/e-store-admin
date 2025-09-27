@@ -87,7 +87,7 @@ export class Product {
 
   save(): void {
     const formData = FormattingFormData(this.form);
-    const product = productMapper(formData, false) as ProductType;
+    const product = productMapper(formData, false) as Partial<ProductType>;
     if (product.uuid && product.uuid !== 'new') {
       this.productService.updateProduct(product.uuid, product);
     } else {

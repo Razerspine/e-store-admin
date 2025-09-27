@@ -59,6 +59,10 @@ export class ProductService {
   }
 
   updateProduct(uuid: string, changes: Partial<ProductType>): void {
+    delete changes.uuid;
+    if (!changes?.image?.url && !changes?.image?.publicId) {
+      delete changes.image;
+    }
     this.http.patch<ProductType>(`${environment.apiBaseUrl}/api/private/products/${uuid}`, changes)
       .subscribe({
         next: response => {
@@ -78,7 +82,11 @@ export class ProductService {
       });
   }
 
-  createProduct(product: ProductType): void {
+  createProduct(product: ProductType | Partial<ProductType>): void {
+    delete product.uuid;
+    if (!product?.image?.url && !product?.image?.publicId) {
+      delete product.image;
+    }
     this.http.post(`${environment.apiBaseUrl}/api/private/products`, product)
       .subscribe({
         next: response => {
