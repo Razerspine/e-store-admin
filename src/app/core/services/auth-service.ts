@@ -40,6 +40,12 @@ export class AuthService {
       },
       error: error => {
         console.error(error);
+        this.messageService.add({
+          severity: 'error',
+          summary: 'Error!',
+          detail: `${error?.error?.message}`,
+          life: 3000
+        });
       }
     });
   }
@@ -62,6 +68,12 @@ export class AuthService {
       },
       error: error => {
         console.error(error);
+        this.messageService.add({
+          severity: 'error',
+          summary: 'Error!',
+          detail: `${error?.error?.message}`,
+          life: 3000
+        });
       }
     });
   }
@@ -93,6 +105,12 @@ export class AuthService {
         },
         error: error => {
           console.error(error);
+          this.messageService.add({
+            severity: 'error',
+            summary: 'Error!',
+            detail: `${error?.error?.message}`,
+            life: 3000
+          });
         }
       });
   }
