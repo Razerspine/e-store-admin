@@ -14,11 +14,6 @@ export const getTableConfig = (defaultLanguage: LanguageType, defaultCurrency: C
       value: (value) => value?.name[defaultLanguage.key] ?? ''
     },
     {
-      name: 'Description',
-      field: 'description',
-      value: (value) => value?.description[defaultLanguage.key] ?? ''
-    },
-    {
       name: 'Category',
       field: 'category',
       value: (value) => value?.category ?? ''

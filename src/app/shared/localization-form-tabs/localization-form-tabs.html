@@ -12,7 +12,11 @@
       @for (tab of languages; track tab.key; let i = $index) {
         <p-tabpanel [value]="tab.key">
           <div [formGroup]="getGroup(i)">
-            <input pInputText type="text" [formControlName]="tab.key" [placeholder]="tab.key" pSize="large" fluid/>
+            @if (editor()) {
+              <p-editor [formControlName]="tab.key" [placeholder]="tab.key" [style]="{ height: '320px' }"/>
+            } @else {
+              <input pInputText type="text" [formControlName]="tab.key" [placeholder]="tab.key" pSize="large" fluid/>
+            }
           </div>
         </p-tabpanel>
       }
