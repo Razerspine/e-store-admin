@@ -8,8 +8,8 @@ import {ConfirmPopup} from 'primeng/confirmpopup';
 import {getTableConfig, buildProductTable} from '@core/utils';
 import {FormControl} from '@angular/forms';
 import {TemplateTable} from '@app/shared';
-import {ProductCaption} from '@pages/product-list/components';
 import {ProductTableActions} from '@core/helpers';
+import {ProductCaption} from '@pages/product-list/product-caption/product-caption';
 
 @Component({
   selector: 'app-product-list',

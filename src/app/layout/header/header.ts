@@ -6,8 +6,8 @@ import {Button} from 'primeng/button';
 import {RouterLink} from '@angular/router';
 import {AuthService, SharedDataService} from '@core/services';
 import {Popover} from 'primeng/popover';
-import {UserInfo} from '@shared/user-info/user-info';
 import {LanguageType} from '@core/models';
+import {UserInfo} from '@app/layout/header/user-info/user-info';
 
 @Component({
   selector: 'app-header',
