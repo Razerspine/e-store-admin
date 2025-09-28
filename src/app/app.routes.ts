@@ -1,6 +1,6 @@
 import {Routes} from '@angular/router';
 import {AuthGuard} from '@core/guards';
-import {ProductResolver} from '@core/services';
+import {ProductResolver} from '@features/products';
 
 export const routes: Routes = [
   {
@@ -11,27 +11,27 @@ export const routes: Routes = [
   {
     title: 'Products list',
     path: 'products',
-    loadComponent: () => import('@pages/product-list/product-list').then(m => m.ProductList),
+    loadComponent: () => import('@features/products').then(m => m.ProductListComponent),
     canActivate: [AuthGuard]
   },
   {
-    title: 'Product details',
+    title: 'ProductDetailComponent details',
     path: 'products/:uuid',
-    loadComponent: () => import('@pages/product/product').then(m => m.Product),
+    loadComponent: () => import('@features/products').then(m => m.ProductDetailComponent),
     canActivate: [AuthGuard],
     resolve: {
       product: ProductResolver
     }
   },
   {
-    title: 'Login',
+    title: 'LoginComponent',
     path: 'login',
-    loadComponent: () => import('@pages/login/login').then(m => m.Login),
+    loadComponent: () => import('@app/pages/login/login.component').then(m => m.LoginComponent),
   },
   {
-    title: "Register",
+    title: "RegisterComponent",
     path: 'register',
-    loadComponent: () => import('@pages/register/register').then(m => m.Register),
+    loadComponent: () => import('@app/pages/register/register.component').then(m => m.RegisterComponent),
   },
   {
     path: '**',

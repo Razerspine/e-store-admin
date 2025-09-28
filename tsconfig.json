@@ -22,11 +22,14 @@
       "@core/*": [
         "app/core/*"
       ],
-      "@pages/*": [
-        "app/pages/*"
+      "@layout/*": [
+        "app/layout/*"
       ],
       "@shared/*": [
         "app/shared/*"
+      ],
+      "@features/*": [
+        "app/features/*"
       ]
     }
   },

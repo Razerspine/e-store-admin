@@ -1,1 +1,1 @@
-export * from './match-password-validator';
+export * from './match-password.validator';
