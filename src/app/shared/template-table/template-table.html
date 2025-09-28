@@ -21,7 +21,7 @@
 
     <ng-template pTemplate="header" let-columns>
       <tr>
-        @if (showCheckbox()) {
+        @if (showSelections()) {
           <th style="width: 4rem">
             <p-tableHeaderCheckbox/>
           </th>
@@ -29,7 +29,7 @@
         @if (headerTemplate(); as header) {
           <ng-container [ngTemplateOutlet]="header" [ngTemplateOutletContext]="{ $implicit: columns }"/>
         }
-        @if (showAction()) {
+        @if (showActions()) {
           <th>Action</th>
         }
       </tr>
@@ -37,7 +37,7 @@
 
     <ng-template pTemplate="body" let-rowData let-columns="columns" let-rowIndex="rowIndex">
       <tr>
-        @if (showCheckbox()) {
+        @if (showSelections()) {
           <td class="no-wrap-column">
             <p-tableCheckbox [value]="rowData"/>
           </td>
@@ -46,7 +46,7 @@
           <ng-container [ngTemplateOutlet]="body"
                         [ngTemplateOutletContext]="{ $implicit: rowData, columns: columns, index: rowIndex }"/>
         }
-        @if (showAction()) {
+        @if (showActions()) {
           <td>
             <div class="table-actions">
               <p-button icon="pi pi-eye"

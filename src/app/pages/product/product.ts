@@ -1,4 +1,4 @@
-import {Component, inject} from '@angular/core';
+import {Component, computed, inject} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {ActivatedRoute} from '@angular/router';
 import {FormArray, FormBuilder, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
@@ -10,7 +10,7 @@ import {Select} from 'primeng/select';
 import {ToggleSwitch} from 'primeng/toggleswitch';
 import {Button} from 'primeng/button';
 import {FormattingFormData} from '@core/utils';
-import {ProductService, SharedDataService} from '@core/services';
+import {ProductFormService, ProductService, SharedDataService} from '@core/services';
 
 @Component({
   selector: 'app-product',
@@ -21,26 +21,15 @@ import {ProductService, SharedDataService} from '@core/services';
 })
 export class Product {
   private route = inject(ActivatedRoute);
-  private fb = inject(FormBuilder);
   private productService = inject(ProductService);
-  sharedService = inject(SharedDataService);
-  form = this.fb.group({
-    uuid: [''],
-    name: this.fb.array([]),
-    description: this.fb.array([]),
-    category: ['all'],
-    price: this.fb.array([]),
-    sku: [''],
-    image: this.fb.group({
-      url: [''],
-      publicId: [''],
-    }),
-    isActive: [true]
-  });
+  private formService = inject(ProductFormService);
+  private shared = inject(SharedDataService);
+  form = this.formService.createForm();
+  categories = computed(() => this.shared.data().categories);
 
   constructor() {
+    this.formService.fillForm(this.form);
     const route = this.route.snapshot.paramMap.get('uuid');
-    this.fillForm();
     if (route && route !== 'new') {
       const product: ProductType = this.route.snapshot.data['product'];
       this.patchForm(product);
@@ -67,22 +56,6 @@ export class Product {
     const formData = productMapper(data, true) as ProductFormType;
     this.form?.patchValue(formData);
     console.log("AFTER PATCH: ", this.form.value);
-  }
-
-  fillForm(): void {
-    const nameArray = this.nameArray;
-    const descriptionArray = this.descriptionArray;
-    const priceArray = this.priceArray;
-    this.sharedService.data().languages.forEach((lang) => {
-      const nameGroup = this.fb.group({[lang.key]: ['', lang.isDefault ? Validators.required : null]});
-      const descriptionGroup = this.fb.group({[lang.key]: ['', lang.isDefault ? Validators.required : null]});
-      nameArray.push(nameGroup);
-      descriptionArray.push(descriptionGroup);
-    });
-    this.sharedService.data().currencies.forEach((curr) => {
-      const priceGroup = this.fb.group({[curr.key]: [null, curr.isDefault ? Validators.required : null]});
-      priceArray.push(priceGroup);
-    });
   }
 
   save(): void {

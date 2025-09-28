@@ -16,8 +16,8 @@ export class TemplateTable {
   captionTemplate: InputSignal<TemplateRef<unknown> | null> = input<TemplateRef<unknown> | null>(null);
   headerTemplate: InputSignal<TemplateRef<{ $implicit: any[] }>> = input.required();
   bodyTemplate: InputSignal<TemplateRef<{ $implicit: any; columns: any[]; index: any[] }>> = input.required();
-  showCheckbox: InputSignal<boolean> = input(true);
-  showAction: InputSignal<boolean> = input(true);
+  showSelections: InputSignal<boolean> = input(true);
+  showActions: InputSignal<boolean> = input(true);
   delete = output<{ event: Event; products: ProductType[] }>();
   details = output<ProductType>();
 }
