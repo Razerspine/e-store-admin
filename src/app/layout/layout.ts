@@ -1,7 +1,7 @@
 import {Component} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {RouterOutlet} from '@angular/router';
-import {Header} from '@app/layout/components/header/header';
+import {Header} from '@app/layout/components';
 
 @Component({
   selector: 'app-layout',

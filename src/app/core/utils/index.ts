@@ -2,3 +2,4 @@ export * from './array-to-object';
 export * from './object-to-array';
 export * from './formatting-form-data';
 export * from './get-table-config';
+export * from './build-product-table';

@@ -1,0 +1,68 @@
+<div class="table-container">
+  <p-table
+    [tableStyle]="{ 'min-width': '100%' }"
+    [columns]="config().columns"
+    [paginator]="config().paginator"
+    [lazy]="config().lazy"
+    [rows]="config().rows"
+    [totalRecords]="config().totalRecords"
+    (onPage)="config().onPage($event)"
+    [showCurrentPageReport]="config().showCurrentPageReport"
+    [rowsPerPageOptions]="config().rowsPerPageOptions"
+    [value]="config().value"
+    [(selection)]="config().selection"
+    [dataKey]="config().dataKey"
+  >
+    <ng-template pTemplate="caption">
+      @if (captionTemplate(); as caption) {
+        <ng-container [ngTemplateOutlet]="caption"></ng-container>
+      }
+    </ng-template>
+
+    <ng-template pTemplate="header" let-columns>
+      <tr>
+        @if (showCheckbox()) {
+          <th style="width: 4rem">
+            <p-tableHeaderCheckbox/>
+          </th>
+        }
+        @if (headerTemplate(); as header) {
+          <ng-container [ngTemplateOutlet]="header" [ngTemplateOutletContext]="{ $implicit: columns }"/>
+        }
+        @if (showAction()) {
+          <th>Action</th>
+        }
+      </tr>
+    </ng-template>
+
+    <ng-template pTemplate="body" let-rowData let-columns="columns" let-rowIndex="rowIndex">
+      <tr>
+        @if (showCheckbox()) {
+          <td class="no-wrap-column">
+            <p-tableCheckbox [value]="rowData"/>
+          </td>
+        }
+        @if (bodyTemplate(); as body) {
+          <ng-container [ngTemplateOutlet]="body"
+                        [ngTemplateOutletContext]="{ $implicit: rowData, columns: columns, index: rowIndex }"/>
+        }
+        @if (showAction()) {
+          <td>
+            <div class="table-actions">
+              <p-button icon="pi pi-eye"
+                        text
+                        severity="info"
+                        (onClick)="details.emit(rowData)"
+              />
+              <p-button icon="pi pi-trash"
+                        text
+                        severity="danger"
+                        (onClick)="delete.emit({ event: $event, products: [rowData] })"
+              />
+            </div>
+          </td>
+        }
+      </tr>
+    </ng-template>
+  </p-table>
+</div>
