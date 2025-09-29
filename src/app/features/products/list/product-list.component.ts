@@ -5,7 +5,7 @@ import {TableModule, TablePageEvent} from 'primeng/table';
 import {PaginatorType} from '@core/models/paginator.type';
 import {ConfirmPopup} from 'primeng/confirmpopup';
 import {FormControl} from '@angular/forms';
-import {TemplateTableComponent} from '@app/shared';
+import {TableCaptionComponent, TemplateTableComponent} from '@app/shared';
 import {
   buildProductTable,
   ProductColumnType,
@@ -14,13 +14,12 @@ import {
   ProductTableActions,
   ProductType,
 } from '@features/products';
-import {ProductCaptionComponent} from '@features/products/list/components';
 import {TableConfigType} from '@core/models';
 
 @Component({
   selector: 'app-product-list',
   standalone: true,
-  imports: [CommonModule, TableModule, ConfirmPopup, TemplateTableComponent, ProductCaptionComponent],
+  imports: [CommonModule, TableModule, ConfirmPopup, TemplateTableComponent, TableCaptionComponent],
   templateUrl: './product-list.component.html',
   styleUrl: './product-list.component.scss'
 })
@@ -45,6 +44,10 @@ export class ProductListComponent {
 
   onDelete(event: Event, products: ProductType[]): void {
     this.actions.confirmDelete(event, products, () => this.selectedProducts.set([]));
+  }
+
+  onSearch(event: string) {
+    this.productService.getProducts({search: event});
   }
 
   showDetails(row: ProductType): void {

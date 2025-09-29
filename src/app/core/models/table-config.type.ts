@@ -1,3 +1,5 @@
+import {WritableSignal} from '@angular/core';
+
 export type TableConfigType<T, C> = {
   columns: C[];
   paginator: boolean;
@@ -8,6 +10,6 @@ export type TableConfigType<T, C> = {
   showCurrentPageReport?: boolean;
   rowsPerPageOptions: number[];
   value: T[];
-  selection?: T[];
+  selection?: WritableSignal<T[]>;
   dataKey?: string;
 };

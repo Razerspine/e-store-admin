@@ -8,10 +8,10 @@
 />
 <ng-template #caption>
   <app-table-caption
-    [selectedItems]="selectedProducts()"
+    [selectedItems]="selectedUsers()"
     [searchInput]="searchInput"
-    [buttonLabel]="'Add Product'"
-    [buttonRoute]="'/products/new'"
+    [buttonLabel]="'Add User'"
+    [buttonRoute]="'/users/new'"
     (onDelete)="onDelete($event.event, $event.items)"
     (onSearch)="onSearch($event)"
   />

@@ -1,0 +1,42 @@
+<div class="table-caption">
+  <div class="top-column">
+    @if (selectedItems() && selectedItems().length > 0) {
+      <div class="row-container">
+        <p class="row-text">
+          Selected: {{ selectedItems().length }}
+        </p>
+        <p-button
+          icon="pi pi-trash"
+          text
+          severity="danger"
+          (onClick)="onDelete.emit({ event: $event, items: selectedItems() })"
+        />
+      </div>
+    }
+  </div>
+
+  <div class="top-column">
+    <p-iconfield iconPosition="left" class="search-wrapper">
+      <p-inputicon>
+        <i class="pi pi-search"></i>
+      </p-inputicon>
+      <input
+        pInputText
+        type="text"
+        placeholder="Search"
+        class="search-input"
+        [formControl]="searchInput()"
+      />
+    </p-iconfield>
+  </div>
+
+  <div class="top-column">
+    <p-button
+      icon="pi pi-plus"
+      text
+      [label]="buttonLabel()"
+      severity="primary"
+      (onClick)="changeRoute()"
+    />
+  </div>
+</div>

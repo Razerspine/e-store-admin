@@ -87,10 +87,8 @@ The project follows a **feature-based architecture** for scalability and maintai
 
 ```
 products/
-  ├── list/                 # product list page + nested components
+  ├── list/                 # product list page
   │   ├── product-list.component.ts/html/scss
-  │   └── components/       # subcomponents used only inside product-list
-  │       └── product-caption.component.ts/html/scss
   ├── detail/               # product detail page
   │   └── product-detail.component.ts/html/scss
   ├── models/               # product-specific types

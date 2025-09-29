@@ -21,7 +21,7 @@ export const buildProductTable = (
     showCurrentPageReport: true,
     rowsPerPageOptions: [5, 10, 20, 50],
     value: data(),
-    selection: selectedProducts(),
+    selection: selectedProducts,
     dataKey: 'uuid'
   };
 }

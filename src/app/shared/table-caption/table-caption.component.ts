@@ -10,37 +10,36 @@ import {debounceTime, distinctUntilChanged} from 'rxjs';
 import {ProductService, ProductType} from '@features/products';
 
 @Component({
-  selector: 'app-product-caption',
+  selector: 'app-table-caption',
   standalone: true,
   imports: [CommonModule, Button, IconField, InputIcon, InputText, ReactiveFormsModule],
-  templateUrl: './product-caption.component.html',
-  styleUrl: './product-caption.component.scss'
+  templateUrl: './table-caption.component.html',
+  styleUrl: './table-caption.component.scss'
 })
-export class ProductCaptionComponent implements AfterViewInit {
+export class TableCaptionComponent<T> implements AfterViewInit {
   private router = inject(Router);
-  private productService = inject(ProductService);
-  selectedProducts: InputSignal<ProductType[]> = input.required();
+  selectedItems: InputSignal<T[]> = input.required();
   searchInput: InputSignal<FormControl> = input.required();
-  delete = output<{ event: Event; items: ProductType[] }>();
+  buttonLabel = input<string>('Add Item');
+  buttonRoute = input<string>('');
+  onDelete = output<{ event: Event; items: T[] }>();
+  onSearch = output<string>();
+
 
   ngAfterViewInit(): void {
     this.searchInput().valueChanges
       .pipe(
         debounceTime(700),
-        distinctUntilChanged()
+        distinctUntilChanged(),
       )
       .subscribe({
         next: value => {
-          if (value) {
-            this.productService.getProducts({search: value});
-          } else {
-            this.productService.getProducts({});
-          }
+          this.onSearch.emit(value ?? '');
         }
       })
   }
 
   changeRoute(): void {
-    this.router.navigate([`/products/new`]).then();
+    this.router.navigate([this.buttonRoute()]).then();
   }
 }
