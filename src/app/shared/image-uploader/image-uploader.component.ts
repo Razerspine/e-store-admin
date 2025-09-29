@@ -1,10 +1,9 @@
 import {Component, inject, input, InputSignal, signal, WritableSignal} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {FormGroup, ReactiveFormsModule} from '@angular/forms';
-import {FileService} from '@core/services/file.service';
 import {Button} from 'primeng/button';
 import {ProgressSpinner} from 'primeng/progressspinner';
-import {MessageService} from 'primeng/api';
+import {FileService, NotificationService} from '@core/services';
 
 @Component({
   selector: 'app-image-uploader',
@@ -15,7 +14,7 @@ import {MessageService} from 'primeng/api';
 })
 export class ImageUploaderComponent {
   private fileService = inject(FileService);
-  private messageService = inject(MessageService);
+  private notify = inject(NotificationService);
   imageGroup: InputSignal<FormGroup> = input.required();
   isLoading: WritableSignal<boolean> = signal(false);
 
@@ -30,12 +29,7 @@ export class ImageUploaderComponent {
         if (response?.url?.length) {
           this.imageGroup().patchValue(response);
           this.isLoading.set(false);
-          this.messageService.add({
-            severity: 'success',
-            summary: 'Success',
-            detail: 'Image successful uploaded!',
-            life: 3000
-          });
+          this.notify.success('Image successful uploaded!')
         }
       },
       error: error => {
@@ -56,12 +50,7 @@ export class ImageUploaderComponent {
           this.imageGroup()?.get('publicId')?.setValue('');
           fileInput.value = '';
           this.isLoading.set(false);
-          this.messageService.add({
-            severity: 'success',
-            summary: 'Success',
-            detail: 'Image successful removed!',
-            life: 3000
-          });
+          this.notify.success('Image successful deleted!');
         }
       });
     } else {

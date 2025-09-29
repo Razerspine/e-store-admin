@@ -1,9 +1,9 @@
 import {inject, Injectable, signal, WritableSignal} from '@angular/core';
-import {UserType} from '@core/models';
 import {HttpClient} from '@angular/common/http';
 import {environment} from '../../../environments/environment';
-import {MessageService} from 'primeng/api';
 import {Router} from '@angular/router';
+import {UserType} from '@features/users';
+import {NotificationService} from '@core/services/notification.service';
 
 const JWT_TOKEN = 'jwt_token';
 
@@ -17,7 +17,7 @@ type UserResponse = {
 })
 export class AuthService {
   private http = inject(HttpClient);
-  private messageService = inject(MessageService);
+  private notify = inject(NotificationService);
   private router = inject(Router);
   isLoggedIn: WritableSignal<boolean> = signal(!!this.getToken());
   user: WritableSignal<UserType | null> = signal(null);
@@ -26,12 +26,7 @@ export class AuthService {
     this.http.post<UserResponse>(`${environment.apiBaseUrl}/api/auth/login`, params).subscribe({
       next: response => {
         if (response && response.token) {
-          this.messageService.add({
-            severity: 'success',
-            summary: 'Success!',
-            detail: 'LoginComponent success! Welcome back!',
-            life: 3000
-          });
+          this.notify.success('Login success! Welcome back!')
           localStorage.setItem(JWT_TOKEN, response.token);
           this.user.set(response.user);
           this.isLoggedIn.set(true);
@@ -40,12 +35,7 @@ export class AuthService {
       },
       error: error => {
         console.error(error);
-        this.messageService.add({
-          severity: 'error',
-          summary: 'Error!',
-          detail: `${error?.error?.message}`,
-          life: 3000
-        });
+        this.notify.error(error?.error?.message);
       }
     });
   }
@@ -54,12 +44,7 @@ export class AuthService {
     this.http.post<UserResponse>(`${environment.apiBaseUrl}/api/auth/register`, params).subscribe({
       next: response => {
         if (response && response.token) {
-          this.messageService.add({
-            severity: 'success',
-            summary: 'Success!',
-            detail: 'Registration success! Enjoy!',
-            life: 3000
-          });
+          this.notify.success('Registration success! Enjoy!');
           localStorage.setItem(JWT_TOKEN, response.token);
           this.user.set(response.user);
           this.isLoggedIn.set(true);
@@ -68,12 +53,7 @@ export class AuthService {
       },
       error: error => {
         console.error(error);
-        this.messageService.add({
-          severity: 'error',
-          summary: 'Error!',
-          detail: `${error?.error?.message}`,
-          life: 3000
-        });
+        this.notify.error(error?.error?.message);
       }
     });
   }
@@ -86,13 +66,8 @@ export class AuthService {
     localStorage.removeItem(JWT_TOKEN);
     this.user.set(null);
     this.isLoggedIn.set(false);
-    this.messageService.add({
-      severity: 'success',
-      summary: 'Success!',
-      detail: 'Logout success! Come back as soon as possible!',
-      life: 3000
-    });
-    this.router.navigate(['/login']);
+    this.notify.success('Logout success! Come back as soon as possible!')
+    this.router.navigate(['/login']).then();
   }
 
   userInfo() {
@@ -105,12 +80,7 @@ export class AuthService {
         },
         error: error => {
           console.error(error);
-          this.messageService.add({
-            severity: 'error',
-            summary: 'Error!',
-            detail: `${error?.error?.message}`,
-            life: 3000
-          });
+          this.notify.error(error?.error?.message);
         }
       });
   }

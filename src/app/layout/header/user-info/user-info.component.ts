@@ -1,7 +1,7 @@
 import {Component, input, InputSignal, output, OutputEmitterRef} from '@angular/core';
 import {CommonModule} from '@angular/common';
-import {UserType} from '@core/models';
 import {Button} from 'primeng/button';
+import {UserType} from '@features/users';
 
 @Component({
   selector: 'app-user-info',
