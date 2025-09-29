@@ -2,6 +2,7 @@ import {Signal, WritableSignal} from '@angular/core';
 import {PaginatorType} from '@core/models/paginator.type';
 import {TablePageEvent} from 'primeng/table';
 import {ProductColumnType, ProductType, ProductTableConfigType} from '@features/products';
+import {TableConfigType} from '@core/models';
 
 export const buildProductTable = (
   columns: ProductColumnType[],
@@ -9,7 +10,7 @@ export const buildProductTable = (
   data: Signal<ProductType[]>,
   selectedProducts: WritableSignal<ProductType[]>,
   onPage: (event: TablePageEvent) => void
-): ProductTableConfigType => {
+): TableConfigType<ProductType, ProductColumnType> => {
   return {
     columns,
     paginator: true,
@@ -20,7 +21,7 @@ export const buildProductTable = (
     showCurrentPageReport: true,
     rowsPerPageOptions: [5, 10, 20, 50],
     value: data(),
-    selection: selectedProducts,
+    selection: selectedProducts(),
     dataKey: 'uuid'
   };
 }

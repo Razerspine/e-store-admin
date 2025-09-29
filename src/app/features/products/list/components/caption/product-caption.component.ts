@@ -21,7 +21,7 @@ export class ProductCaptionComponent implements AfterViewInit {
   private productService = inject(ProductService);
   selectedProducts: InputSignal<ProductType[]> = input.required();
   searchInput: InputSignal<FormControl> = input.required();
-  delete = output<{ event: Event; products: ProductType[] }>();
+  delete = output<{ event: Event; items: ProductType[] }>();
 
   ngAfterViewInit(): void {
     this.searchInput().valueChanges

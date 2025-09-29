@@ -3,14 +3,14 @@
   [captionTemplate]="caption"
   [headerTemplate]="header"
   [bodyTemplate]="body"
-  (delete)="onDelete($event.event, $event.products)"
+  (delete)="onDelete($event.event, $event.items)"
   (details)="showDetails($event)"
 />
 <ng-template #caption>
   <app-product-caption
     [selectedProducts]="selectedProducts()"
     [searchInput]="searchInput"
-    (delete)="onDelete($event.event, $event.products)"
+    (delete)="onDelete($event.event, $event.items)"
   />
 </ng-template>
 <ng-template #header let-columns>

@@ -2,7 +2,7 @@ import {Component, input, InputSignal, output, TemplateRef} from '@angular/core'
 import {CommonModule} from '@angular/common';
 import {TableModule} from 'primeng/table';
 import {Button} from 'primeng/button';
-import {ProductType, ProductTableConfigType} from '@features/products';
+import {TableConfigType} from '@core/models';
 
 @Component({
   selector: 'app-template-table',
@@ -11,13 +11,14 @@ import {ProductType, ProductTableConfigType} from '@features/products';
   templateUrl: './template-table.component.html',
   styleUrl: './template-table.component.scss'
 })
-export class TemplateTableComponent {
-  config: InputSignal<ProductTableConfigType> = input.required();
+export class TemplateTableComponent<T, C> {
+  config: InputSignal<TableConfigType<T, C>> = input.required();
   captionTemplate: InputSignal<TemplateRef<unknown> | null> = input<TemplateRef<unknown> | null>(null);
-  headerTemplate: InputSignal<TemplateRef<{ $implicit: any[] }>> = input.required();
-  bodyTemplate: InputSignal<TemplateRef<{ $implicit: any; columns: any[]; index: any[] }>> = input.required();
+  headerTemplate: InputSignal<TemplateRef<{ $implicit: C[] }>> = input.required();
+  bodyTemplate: InputSignal<TemplateRef<{ $implicit: T; columns: C[]; index: number }>> = input.required();
   showSelections: InputSignal<boolean> = input(true);
   showActions: InputSignal<boolean> = input(true);
-  delete = output<{ event: Event; products: ProductType[] }>();
-  details = output<ProductType>();
+
+  delete = output<{ event: Event; items: T[] }>();
+  details = output<T>();
 }

@@ -1,30 +1,24 @@
 import {inject, Injectable} from '@angular/core';
-import {ConfirmationService} from 'primeng/api';
-import {Router} from '@angular/router';
 import {ProductService, ProductType} from '@features/products';
+import {BaseTableActionsService} from '@core/services';
 
 @Injectable({providedIn: 'root'})
-export class ProductTableActions {
-  private confirmationService = inject(ConfirmationService);
+export class ProductTableActions extends BaseTableActionsService<ProductType> {
   private productService = inject(ProductService);
-  private router = inject(Router);
 
-  confirmDelete(event: Event, products: ProductType[], afterDelete: () => void) {
-    const uuids = products.map(p => p.uuid);
-    this.confirmationService.confirm({
-      target: event.currentTarget as EventTarget,
-      message: 'Are you sure you want delete this selected product-detail/s?',
-      icon: 'pi pi-info-circle',
-      rejectButtonProps: {label: 'Cancel', severity: 'secondary', outlined: true},
-      acceptButtonProps: {label: 'Confirm', severity: 'danger'},
-      accept: () => {
-        afterDelete();
-        this.productService.deleteProducts(uuids);
-      }
-    });
+  protected getId(item: ProductType): string {
+    return item.uuid;
   }
 
-  navigateToDetails(row: ProductType) {
-    this.router.navigate([`/products/${row.uuid}`]).then();
+  protected getDeleteMessage(items: ProductType[]): string {
+    return `Are you sure you want to delete ${items.length} product(s)?`;
+  }
+
+  protected deleteItems(ids: string[]): void {
+    this.productService.deleteProducts(ids);
+  }
+
+  protected getDetailsUrl(item: ProductType): string {
+    return `/products/${item.uuid}`;
   }
 }

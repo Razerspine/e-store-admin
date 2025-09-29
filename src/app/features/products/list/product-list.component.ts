@@ -13,9 +13,9 @@ import {
   ProductService,
   ProductTableActions,
   ProductType,
-  ProductTableConfigType
 } from '@features/products';
 import {ProductCaptionComponent} from '@features/products/list/components';
+import {TableConfigType} from '@core/models';
 
 @Component({
   selector: 'app-product-list',
@@ -33,7 +33,7 @@ export class ProductListComponent {
   columns: ProductColumnType[] = getTableConfig(this.sharedService.data().defaultLanguage, this.sharedService.data().defaultCurrency);
   selectedProducts: WritableSignal<ProductType[]> = signal([]);
   searchInput = new FormControl('');
-  tableConfig = computed<ProductTableConfigType>(() =>
+  tableConfig = computed<TableConfigType<ProductType, ProductColumnType>>(() =>
     buildProductTable(this.columns, this.pagination, this.data, this.selectedProducts, this.onPageChange.bind(this))
   );
 
