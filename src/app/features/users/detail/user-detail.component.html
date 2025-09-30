@@ -1,0 +1,51 @@
+<div class="form-wrapper">
+  <form class="form" [formGroup]="form">
+    <h2 class="form-title">User Form</h2>
+    <div class="form-group">
+      <div class="form-col">
+        <label for="email" class="form-group-label">Email</label>
+        <input id="email" pInputText type="email" formControlName="email" pSize="large" fluid/>
+      </div>
+      <div class="form-col">
+        <label for="password" class="form-group-label">Password</label>
+        <input id="password" pInputText type="password" formControlName="password" pSize="large" fluid/>
+      </div>
+    </div>
+    <div class="form-group">
+      <div class="form-col">
+        <label class="form-group-label">Role</label>
+        <p-select [options]="roles()" formControlName="role" size="large" fluid/>
+      </div>
+      <div class="form-col">
+        <label class="form-group-label">Language</label>
+        <p-select [options]="languages()"
+                  optionValue="key"
+                  optionLabel="label"
+                  formControlName="language"
+                  size="large"
+                  fluid
+        />
+      </div>
+      <div class="form-col">
+        <label class="form-group-label">Currency</label>
+        <p-select [options]="currencies()"
+                  optionValue="key"
+                  optionLabel="key"
+                  formControlName="currency"
+                  size="large"
+                  fluid
+        />
+      </div>
+    </div>
+    <div class="form-button-group">
+      <p-button [style]="{'min-width': '150px'}"
+                [disabled]="form.invalid"
+                severity="primary"
+                size="large"
+                label="Save"
+                icon="pi pi-save"
+                (onClick)="save()"
+      />
+    </div>
+  </form>
+</div>

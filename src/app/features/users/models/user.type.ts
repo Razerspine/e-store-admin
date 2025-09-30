@@ -4,7 +4,6 @@ export type UserType = {
   role: string,
   language: string,
   currency: string,
-  wishList: [],
   createdAt: Date | null,
   updatedAt: Date | null,
 }

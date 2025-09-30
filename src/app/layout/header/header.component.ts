@@ -1,4 +1,4 @@
-import {Component, inject, signal, WritableSignal} from '@angular/core';
+import {Component, computed, inject, signal, WritableSignal} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {Toolbar} from 'primeng/toolbar';
 import {FormsModule} from '@angular/forms';
@@ -8,22 +8,27 @@ import {AuthService, SharedDataService} from '@core/services';
 import {Popover} from 'primeng/popover';
 import {LanguageType} from '@core/models';
 import {UserInfoComponent} from '@layout/header/user-info/user-info.component';
+import {Menu} from 'primeng/menu';
+import {MENU_CONFIG} from '@core/configs';
 
 @Component({
   selector: 'app-header',
   standalone: true,
-  imports: [CommonModule, Toolbar, FormsModule, Button, RouterLink, Popover, UserInfoComponent],
+  imports: [CommonModule, Toolbar, FormsModule, Button, RouterLink, Popover, UserInfoComponent, Menu],
   templateUrl: './header.component.html',
   styleUrl: './header.component.scss'
 })
 export class HeaderComponent {
-  authService = inject(AuthService);
+  private authService = inject(AuthService);
   sharedService = inject(SharedDataService);
   selectedLanguage: WritableSignal<LanguageType> = signal(this.sharedService.data().defaultLanguage);
   icon: WritableSignal<'pi pi-moon' | 'pi pi-sun'> = signal('pi pi-moon');
+  isLoggedIn = computed(() => this.authService.isLoggedIn());
+  user = computed(() => this.authService.user());
+  navMenu = MENU_CONFIG;
 
   constructor() {
-    if (!this.authService.isLoggedIn()) {
+    if (!this.isLoggedIn()) {
       return;
     }
     this.authService.userInfo();

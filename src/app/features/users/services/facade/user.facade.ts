@@ -29,7 +29,6 @@ export class UserFacade {
   createUser(user: Partial<UserType>) {
     this.api.createUser(user).subscribe({
       next: () => {
-        this.loadUsers({});
         this.router.navigate(['/users']).then();
         this.notify.success('User created successfully');
       },
@@ -40,7 +39,6 @@ export class UserFacade {
   updateUser(userId: string, changes: Partial<UserType>) {
     this.api.updateUser(userId, changes).subscribe({
       next: () => {
-        this.loadUsers({});
         this.router.navigate(['/users']).then();
         this.notify.success('User updated successfully');
       },

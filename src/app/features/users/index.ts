@@ -5,6 +5,7 @@ export * from './services/api/user-api.service';
 export * from './services/store/user.store';
 export * from './services/facade/user.facade';
 export * from './services/user.resolver';
+export * from './services/user-form.service';
 
 export * from './models/user.type';
 export * from './models/user-filters.type';
