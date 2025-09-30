@@ -9,7 +9,7 @@ export class UserResolver implements Resolve<UserType | null> {
   private router = inject(Router);
 
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<UserType | null> {
-    const userId = route.paramMap.get('id');
+    const userId = route.paramMap.get('userId');
 
     if (!userId || userId === 'new') {
       return of(null);

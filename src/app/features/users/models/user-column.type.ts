@@ -1,7 +1,6 @@
 import {UserType} from '@features/users';
+import {BaseColumnType} from '@core/models/base-column.type';
 
-export type UserColumnType = {
-  name: string,
-  field: string,
-  value: (value: Pick<UserType, 'userId' | 'email' | 'role' | 'createdAt' | 'updatedAt'>) => string
-}
+export type UserColumnType = BaseColumnType<
+  Pick<UserType, 'userId' | 'email' | 'role' | 'createdAt' | 'updatedAt'>
+>

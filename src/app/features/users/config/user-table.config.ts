@@ -1,5 +1,6 @@
 import {UserColumnType} from '@features/users';
 import {DatePipe} from '@angular/common';
+import {DATE_CONFIG} from '@core/configs';
 
 const datePipe = new DatePipe('en-US');
 
@@ -24,7 +25,7 @@ export const USER_TABLE_CONFIG: UserColumnType[] = [
     field: 'createdAt',
     value: (value) => {
       if (value.createdAt) {
-        const formated = datePipe.transform(value.createdAt, 'yyyy-MM-dd HH:mm:ss', 'UTC');
+        const formated = datePipe.transform(value.createdAt, DATE_CONFIG.format, DATE_CONFIG.timezone);
         return `${formated}`;
       } else {
         return '';
@@ -36,7 +37,7 @@ export const USER_TABLE_CONFIG: UserColumnType[] = [
     field: 'updatedAt',
     value: (value) => {
       if (value.updatedAt) {
-        const formated = datePipe.transform(value.updatedAt, 'yyyy-MM-dd HH:mm:ss', 'UTC');
+        const formated = datePipe.transform(value.updatedAt, DATE_CONFIG.format, DATE_CONFIG.timezone);
         return `${formated}`;
       } else {
         return '';
