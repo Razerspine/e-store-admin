@@ -1,142 +1,135 @@
-# 📦 EStore Admin
+# 🧩 Admin Panel (Angular)
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version **20.2.1**.
+A modular admin panel built with **Angular v20**, featuring reactive forms, signals, facade architecture, and a scalable feature-first structure.
 
 ---
 
-## 🚀 Development server
+## 📁 Project Structure
 
-To start a local development server, run:
+```
+src/
+ ├── app/
+ │   ├── core/        # Application core: configs, guards, models, services, utilities
+ │   ├── features/    # Feature modules: users, products, etc.
+ │   ├── layout/      # Layout and header components
+ │   ├── pages/       # Auth pages: login, register
+ │   ├── shared/      # Reusable UI components
+ ├── assets/          # Fonts, images, global styles
+ ├── environments/    # Environment configurations
+```
+
+---
+
+## 🧠 Feature Architecture (example: `features/products`)
+
+Each feature module is fully isolated and includes:
+
+- `detail/` — Create/edit component
+- `list/` — List view + table actions
+- `models/` — Types: `product.type.ts`, `product-column.type.ts`, `product-form.type.ts`
+- `services/`
+  - `api/` — Backend communication
+  - `store/` — Signal-based state management
+  - `facade/` — Public interface for components
+  - `product-form.service.ts` — Form generation logic
+  - `product.resolver.ts` — Route-based data preloading
+- `utils/` — Table builders, form formatters
+- `mappers/` — Data transformation
+
+---
+
+## 🔁 Architectural Patterns
+
+- **Signals + WritableSignal** — Local reactive state
+- **Facade + Store** — Logic separation from components
+- **Reactive Forms** — Dynamic validation and form building
+- **Resolvers** — Preload data before route activation
+- **Shared Components** — `table-caption`, `template-table`, `image-uploader`
+
+---
+
+## 🔐 Authentication
+
+- `auth.guard.ts` — Route protection
+- `auth.interceptor.ts` — Token injection
+- `auth.service.ts` — Login, logout, current user
+
+---
+
+## 📦 Shared Models & Configs
+
+- `core/models/` — Common types: `BaseColumnType`, `PaginatorType`, `TableConfigType`
+- `core/configs/` — Static configs: languages, currencies, roles, categories
+
+---
+
+## 🧩 Shared Components
+
+- `table-caption` — Table header with search, actions, and delete
+- `template-table` — Config-driven generic table
+- `image-uploader` — Drag-and-drop image upload
+- `form-tabs` — Localization and currency tabbed forms
+
+---
+
+## 📌 API Endpoints
+
+### Users
+- `GET /api/users` — Fetch users
+- `POST /api/users` — Create user
+- `PUT /api/users/:id` — Update user
+- `DELETE /api/users/:id` — Delete user
+
+### Products
+- `GET /api/products` — Fetch products
+- `POST /api/products` — Create product
+- `PUT /api/products/:id` — Update product
+- `DELETE /api/products/:id` — Delete product
+
+---
+
+## 🧾 Forms
+
+- Built via `user-form.service.ts`, `product-form.service.ts`
+- Support dynamic validation (e.g. password required on create, optional on edit)
+- Use `FormBuilder` and `FormGroup`
+
+---
+
+## 🔄 Signals & State
+
+- `store.ts` — Holds `WritableSignal<T[]>`, `Signal<PaginatorType>`
+- `facade.ts` — Exposes methods like `loadUsers()`, `updateUser()`, `createProduct()`
+- Components subscribe directly to signals
+
+---
+
+## 🚀 Getting Started
 
 ```bash
-ng serve
-```
-
-Once the server is running, open your browser and navigate to 👉 [http://localhost:4200/](http://localhost:4200/).  
-The application will automatically reload whenever you modify any of the source files.
-
----
-
-## 🛠 Code scaffolding
-
-Angular CLI includes powerful scaffolding tools. To generate a new component, run:
-
-```bash
-ng generate component component-name
-```
-
-For a complete list of available schematics (such as components, directives, or pipes), run:
-
-```bash
-ng generate --help
+npm install
+npm run start
 ```
 
 ---
 
-## 📦 Building
+## 🛠️ Tech Stack
 
-To build the project, run:
-
-```bash
-ng build
-```
-
-This will compile your project and store the build artifacts in the `dist/` directory.  
-By default, the production build optimizes your application for performance and speed.
-
----
-
-## ✅ Running unit tests
-
-To execute unit tests with the Karma test runner, use:
-
-```bash
-ng test
-```
+- Angular v20
+- TypeScript
+- Signals API
+- RxJS (~7.8)
+- SCSS
+- REST API
+- PrimeNG v20
+- Quill v2
 
 ---
 
-## 🌐 Running end-to-end tests
+## 📚 Best Practices
 
-For end-to-end (e2e) testing, run:
-
-```bash
-ng e2e
-```
-
-⚠️ Angular CLI does not come with an end-to-end testing framework by default.  
-You can choose one that suits your needs.
-
----
-
-## 🏗 Architecture
-
-The project follows a **feature-based architecture** for scalability and maintainability.
-
-### 📂 Layers
-
-- **core/** – global infrastructure: configs, guards, interceptors, base services, validators, and shared models.
-- **features/** – business domains (e.g. products), each containing its own components, services, models, utils, and mappers.
-- **shared/** – reusable UI components (e.g. tables, uploads, form, tabs) that can be used across features.
-- **layout/** – application shell and structural components (header, footer, sidebar, etc.).
-- **pages/** – standalone public pages (e.g. login, register).
-
----
-
-### 📌 Example: `features/products`
-
-```
-products/
-  ├── list/                 # product list page
-  │   ├── product-list.component.ts/html/scss
-  ├── detail/               # product detail page
-  │   └── product-detail.component.ts/html/scss
-  ├── models/               # product-specific types
-  ├── services/             # product services, resolvers, actions
-  ├── utils/                # product-specific helper functions
-  └── mappers/              # mapping between API and UI models
-```
-
----
-
-### 📝 Naming conventions
-
-- Components → `*.component.ts`
-- Services → `*.service.ts`
-- Resolvers → `*.resolver.ts`
-- Guards → `*.guard.ts`
-- Interceptors → `*.interceptor.ts`
-- Models/Types → `*.type.ts`
-- Mappers → `*.mapper.ts`
-- Validators → `*.validator.ts`
-- Utils → `*.util.ts` (or verb file names, if one function per file)
-
----
-
-### 📊 Architecture diagram
-
-```
-src
-├── app
-│   ├── core        # global infrastructure
-│   ├── features    # business domains (products, users, etc.)
-│   ├── shared      # reusable UI components
-│   ├── layout      # application shell (header, footer, sidebar)
-│   └── pages       # standalone pages (login, register)
-└── assets          # static resources
-```
-
-**Flow of dependencies:**
-
-```
-core   →  features
-shared →  features
-layout →  uses shared + features
-pages  →  use core + shared
-```
-
----
-
-## 📚 Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the 👉 [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli).
+- Use barrel files (`index.ts`) for clean imports
+- Separate types, utilities, and configs by layer
+- Follow feature-first architecture
+- Use resolvers for route-based data loading
+- Keep components dumb — delegate logic to facades  
