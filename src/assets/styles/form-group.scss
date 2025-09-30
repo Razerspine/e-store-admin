@@ -115,8 +115,41 @@
   }
 }
 
+.info-group {
+  background: var(--p-surface-0);
+  color: var(--p-blue-500);
+  border: 1px solid var(--p-form-field-border-color);
+  border-radius: var(--p-form-field-border-radius);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  max-width: 350px;
+  font-size: 16px;
+  font-weight: 700;
+  padding: 15px 20px;
+  margin-bottom: 30px;
+  gap: 10px;
+
+  &.medium-width {
+    max-width: 500px;
+  }
+
+  &.large-width {
+    max-width: 700px;
+  }
+
+  &.full-width {
+    max-width: 100%;
+  }
+
+  @media screen and (min-width: 768px) {
+    font-size: 18px;
+  }
+}
+
 .p-dark {
-  .form {
+  .form, .info-group {
     background: var(--p-surface-900);
   }
 }

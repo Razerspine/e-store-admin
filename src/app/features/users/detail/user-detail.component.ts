@@ -47,7 +47,6 @@ export class UserDetailComponent {
 
   save(): void {
     const formData = this.form?.value;
-    console.log(formData);
     if (this.userId()) {
       this.facade.updateUser(this.userId()!, formData);
     } else {

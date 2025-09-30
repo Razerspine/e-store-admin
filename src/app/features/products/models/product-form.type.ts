@@ -1,5 +1,4 @@
 export type ProductFormType = {
-  uuid: string;
   name: Array<Record<string, string>>;
   description: Array<Record<string, string>>;
   category: string;

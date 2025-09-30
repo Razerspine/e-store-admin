@@ -11,7 +11,6 @@ export class ProductFormService {
 
   createForm(): FormGroup {
     return this.fb.group({
-      uuid: [''],
       name: this.fb.array([]),
       description: this.fb.array([]),
       category: ['all'],

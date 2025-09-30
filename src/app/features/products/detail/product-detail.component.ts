@@ -1,4 +1,4 @@
-import {Component, computed, inject} from '@angular/core';
+import {Component, computed, inject, signal} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {ActivatedRoute} from '@angular/router';
 import {FormArray, FormGroup, ReactiveFormsModule} from '@angular/forms';
@@ -30,13 +30,17 @@ export class ProductDetailComponent {
   private shared = inject(SharedDataService);
   form = this.formService.createForm();
   categories = computed(() => this.shared.data().categories);
+  productUuid = signal<string | null>(null);
 
   constructor() {
     this.formService.fillForm(this.form);
     const route = this.route.snapshot.paramMap.get('uuid');
     if (route && route !== 'new') {
+      this.productUuid.set(route);
       const product: ProductType = this.route.snapshot.data['product'];
       this.patchForm(product);
+    } else {
+      this.productUuid.set(null);
     }
   }
 
@@ -65,8 +69,8 @@ export class ProductDetailComponent {
   save(): void {
     const formData = FormatFormData(this.form);
     const product = productMapper(formData, false) as Partial<ProductType>;
-    if (product.uuid && product.uuid !== 'new') {
-      this.facade.updateProduct(product.uuid, product);
+    if (this.productUuid()) {
+      this.facade.updateProduct(this.productUuid()!, product);
     } else {
       this.facade.createProduct(product);
     }

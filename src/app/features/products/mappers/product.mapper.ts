@@ -3,7 +3,6 @@ import {ProductFormType, ProductType} from '@features/products';
 
 export const productMapper = (data: ProductType | ProductFormType, toForm: boolean = false): ProductType | ProductFormType => {
   return {
-    uuid: data.uuid,
     name: toForm ? objectToArray((data as ProductType).name) : arrayToObject((data as ProductFormType).name),
     description: toForm ? objectToArray((data as ProductType).description) : arrayToObject((data as ProductFormType).description),
     category: data.category,
