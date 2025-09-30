@@ -1,5 +1,5 @@
 <div class="tabs-wrapper">
-  <p class="tabs-title">{{ title() }}</p>
+  <p class="form-group-label">{{ title() }}</p>
   <p-tabs value="en" scrollable>
     <p-tablist>
       @for (tab of languages; track tab.key) {
@@ -13,7 +13,7 @@
         <p-tabpanel [value]="tab.key">
           <div [formGroup]="getGroup(i)">
             @if (editor()) {
-              <p-editor [formControlName]="tab.key" [placeholder]="tab.key" [style]="{ height: '250px' }"/>
+              <p-editor [formControlName]="tab.key" [placeholder]="tab.key" [style]="{ height: '300px' }"/>
             } @else {
               <input pInputText type="text" [formControlName]="tab.key" [placeholder]="tab.key" pSize="large" fluid/>
             }
