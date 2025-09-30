@@ -4,7 +4,7 @@ import {TableCaptionComponent, TemplateTableComponent} from '@app/shared';
 import {ConfirmPopup} from 'primeng/confirmpopup';
 import {TableModule, TablePageEvent} from 'primeng/table';
 import {buildUserTable, USER_TABLE_CONFIG, UserColumnType, UserFacade, UserType} from '@features/users';
-import {UserTableActions} from '@features/users/list/user-table-actions.service';
+import {UserTableActions} from './user-table-actions.service';
 import {TableConfigType} from '@core/models';
 import {FormControl} from '@angular/forms';
 

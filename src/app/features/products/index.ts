@@ -1,10 +1,11 @@
 export * from './list/product-list.component';
 export * from './detail/product-detail.component';
 
-export * from './services/product.service';
+export * from './services/api/product-api.service';
+export * from './services/store/product.store';
+export * from './services/facade/product.facade';
 export * from './services/product.resolver';
 export * from './services/product-form.service';
-export * from './services/product-table-actions.service';
 
 export * from './models/product.type';
 export * from './models/product-form.type';

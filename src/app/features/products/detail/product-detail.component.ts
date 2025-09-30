@@ -8,11 +8,10 @@ import {Select} from 'primeng/select';
 import {ToggleSwitch} from 'primeng/toggleswitch';
 import {Button} from 'primeng/button';
 import {
-  FormatFormData,
+  FormatFormData, ProductFacade,
   ProductFormService,
   ProductFormType,
   productMapper,
-  ProductService,
   ProductType
 } from '@features/products';
 import {SharedDataService} from '@core/services';
@@ -26,7 +25,7 @@ import {SharedDataService} from '@core/services';
 })
 export class ProductDetailComponent {
   private route = inject(ActivatedRoute);
-  private productService = inject(ProductService);
+  private facade = inject(ProductFacade);
   private formService = inject(ProductFormService);
   private shared = inject(SharedDataService);
   form = this.formService.createForm();
@@ -67,9 +66,9 @@ export class ProductDetailComponent {
     const formData = FormatFormData(this.form);
     const product = productMapper(formData, false) as Partial<ProductType>;
     if (product.uuid && product.uuid !== 'new') {
-      this.productService.updateProduct(product.uuid, product);
+      this.facade.updateProduct(product.uuid, product);
     } else {
-      this.productService.createProduct(product);
+      this.facade.createProduct(product);
     }
   }
 }

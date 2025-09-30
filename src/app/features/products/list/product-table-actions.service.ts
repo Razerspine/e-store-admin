@@ -1,10 +1,10 @@
 import {inject, Injectable} from '@angular/core';
-import {ProductService, ProductType} from '@features/products';
+import {ProductFacade, ProductType} from '@features/products';
 import {BaseTableActionsService} from '@core/services';
 
 @Injectable({providedIn: 'root'})
 export class ProductTableActions extends BaseTableActionsService<ProductType> {
-  private productService = inject(ProductService);
+  private facade = inject(ProductFacade);
 
   protected getId(item: ProductType): string {
     return item.uuid;
@@ -15,7 +15,7 @@ export class ProductTableActions extends BaseTableActionsService<ProductType> {
   }
 
   protected deleteItems(ids: string[]): void {
-    this.productService.deleteProducts(ids);
+    this.facade.deleteProduct(ids);
   }
 
   protected getDetailsUrl(item: ProductType): string {

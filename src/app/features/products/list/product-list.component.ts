@@ -10,11 +10,10 @@ import {
   buildProductTable,
   ProductColumnType,
   getTableConfig,
-  ProductService,
-  ProductTableActions,
-  ProductType,
+  ProductType, ProductFacade,
 } from '@features/products';
 import {TableConfigType} from '@core/models';
+import {ProductTableActions} from './product-table-actions.service';
 
 @Component({
   selector: 'app-product-list',
@@ -24,11 +23,11 @@ import {TableConfigType} from '@core/models';
   styleUrl: './product-list.component.scss'
 })
 export class ProductListComponent {
-  private productService = inject(ProductService);
+  private facade = inject(ProductFacade);
   private actions = inject(ProductTableActions);
   sharedService = inject(SharedDataService);
-  data: Signal<ProductType[]> = computed(() => this.productService.products());
-  pagination: Signal<PaginatorType> = computed(() => this.productService.paginator());
+  data: Signal<ProductType[]> = computed(() => this.facade.products());
+  pagination: Signal<PaginatorType> = computed(() => this.facade.paginator());
   columns: ProductColumnType[] = getTableConfig(this.sharedService.data().defaultLanguage, this.sharedService.data().defaultCurrency);
   selectedProducts: WritableSignal<ProductType[]> = signal([]);
   searchInput = new FormControl('');
@@ -36,10 +35,14 @@ export class ProductListComponent {
     buildProductTable(this.columns, this.pagination, this.data, this.selectedProducts, this.onPageChange.bind(this))
   );
 
+  constructor() {
+    this.facade.loadProducts({});
+  }
+
   onPageChange(event: TablePageEvent): void {
     const {first, rows} = event;
     const page = Math.floor(first / rows) + 1;
-    this.productService.getProducts({page: page, limit: rows});
+    this.facade.loadProducts({page: page, limit: rows});
   }
 
   onDelete(event: Event, products: ProductType[]): void {
@@ -47,7 +50,7 @@ export class ProductListComponent {
   }
 
   onSearch(event: string) {
-    this.productService.getProducts({search: event});
+    this.facade.loadProducts({search: event});
   }
 
   showDetails(row: ProductType): void {

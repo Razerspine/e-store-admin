@@ -7,7 +7,6 @@ import {InputIcon} from 'primeng/inputicon';
 import {InputText} from 'primeng/inputtext';
 import {FormControl, ReactiveFormsModule} from '@angular/forms';
 import {debounceTime, distinctUntilChanged} from 'rxjs';
-import {ProductService, ProductType} from '@features/products';
 
 @Component({
   selector: 'app-table-caption',

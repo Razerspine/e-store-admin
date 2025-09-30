@@ -1,14 +1,13 @@
 import {inject, Injectable} from '@angular/core';
-import {ProductService} from '@features/products/services/product.service';
 import {ActivatedRouteSnapshot, Resolve, Router, RouterStateSnapshot} from '@angular/router';
 import {catchError, EMPTY, Observable, of} from 'rxjs';
-import {ProductType} from '@features/products';
+import {ProductFacade, ProductType} from '@features/products';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ProductResolver implements Resolve<ProductType | null> {
-  private productService = inject(ProductService);
+  private facade = inject(ProductFacade);
   private router = inject(Router);
 
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<ProductType | null> {
@@ -18,12 +17,13 @@ export class ProductResolver implements Resolve<ProductType | null> {
       return of(null);
     }
 
-    return this.productService.getProductByUuid(uuid).pipe(
-      catchError((error) => {
-        console.error('Error loading product-detail', error);
-        this.router.navigate(['/products']).then();
-        return EMPTY;
-      })
-    );
+    return this.facade.getProduct(uuid)
+      .pipe(
+        catchError((error) => {
+          console.error('Error loading product detail', error);
+          this.router.navigate(['/products']).then();
+          return EMPTY;
+        })
+      );
   }
 }
