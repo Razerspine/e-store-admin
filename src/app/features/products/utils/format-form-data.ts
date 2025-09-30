@@ -4,7 +4,6 @@ import {ProductFormType} from '@features/products';
 export const FormatFormData = (form: FormGroup): ProductFormType => {
   const rawData = form.getRawValue();
   return {
-    uuid: rawData.uuid || '',
     name: Array.isArray(rawData.name) ? rawData.name : {},
     description: Array.isArray(rawData.description) ? rawData.description : {},
     category: rawData.category || 'all',
