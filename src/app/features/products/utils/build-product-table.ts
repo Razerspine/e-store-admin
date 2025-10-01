@@ -1,7 +1,7 @@
 import {Signal, WritableSignal} from '@angular/core';
 import {PaginatorType} from '@core/models/paginator.type';
 import {TablePageEvent} from 'primeng/table';
-import {ProductColumnType, ProductType, ProductTableConfigType} from '@features/products';
+import {ProductColumnType, ProductType} from '@features/products';
 import {TableConfigType} from '@core/models';
 
 export const buildProductTable = (

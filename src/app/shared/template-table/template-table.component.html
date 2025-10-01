@@ -12,6 +12,7 @@
     [value]="config().value"
     [(selection)]="config().selection"
     [dataKey]="config().dataKey"
+    [globalFilterFields]="config().globalFilterFields"
   >
     <ng-template pTemplate="caption">
       @if (captionTemplate(); as caption) {
@@ -19,7 +20,34 @@
       }
     </ng-template>
 
-    <ng-template pTemplate="header" let-columns>
+    <ng-template pTemplate="header" let-columns let-rowData>
+      @if (config().globalFilterFields) {
+        <tr class="filter-row">
+          @if (showSelections()) {
+            <th style="width: 4rem"></th>
+          }
+          @for (col of columns; track col) {
+            <th>
+              @if (col?.filter?.active) {
+                <p-columnFilter [field]="col.field" matchMode="equals" [showMenu]="false">
+                  <ng-template #filter let-value let-filter="filterCallback">
+                    <p-select [(ngModel)]="rowData[col.filed]"
+                              [options]="col.filter.options"
+                              (onChange)="onFilter($event.value, col.field)"
+                              placeholder="Filter by role"
+                              [showClear]="true"
+                              [style]="{'min-width': '140px'}"
+                    ></p-select>
+                  </ng-template>
+                </p-columnFilter>
+              }
+            </th>
+          }
+          @if (showActions()) {
+            <th></th>
+          }
+        </tr>
+      }
       <tr>
         @if (showSelections()) {
           <th style="width: 4rem">

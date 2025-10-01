@@ -1,13 +1,15 @@
 import {Component, input, InputSignal, output, TemplateRef} from '@angular/core';
 import {CommonModule} from '@angular/common';
-import {TableModule} from 'primeng/table';
+import {TableFilterEvent, TableModule} from 'primeng/table';
 import {Button} from 'primeng/button';
 import {TableConfigType} from '@core/models';
+import {Select} from 'primeng/select';
+import {FormsModule} from '@angular/forms';
 
 @Component({
   selector: 'app-template-table',
   standalone: true,
-  imports: [CommonModule, TableModule, Button],
+  imports: [CommonModule, TableModule, Button, Select, FormsModule],
   templateUrl: './template-table.component.html',
   styleUrl: './template-table.component.scss'
 })
@@ -21,4 +23,9 @@ export class TemplateTableComponent<T, C> {
 
   delete = output<{ event: Event; items: T[] }>();
   details = output<T>();
+  filter = output<{ event: TableFilterEvent; field: string }>();
+
+  onFilter(value: TableFilterEvent, field: string) {
+    this.filter.emit({event: value, field: field});
+  }
 }

@@ -5,6 +5,7 @@
   [bodyTemplate]="body"
   (delete)="onDelete($event.event, $event.items)"
   (details)="showDetails($event)"
+  (filter)="onFilter($event.event, $event.field)"
 />
 <ng-template #caption>
   <app-table-caption

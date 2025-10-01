@@ -1,6 +1,6 @@
 import {UserColumnType} from '@features/users';
 import {DatePipe} from '@angular/common';
-import {DATE_CONFIG} from '@core/configs';
+import {DATE_CONFIG, ROLE_CONFIG} from '@core/configs';
 
 const datePipe = new DatePipe('en-US');
 
@@ -19,6 +19,11 @@ export const USER_TABLE_CONFIG: UserColumnType[] = [
     name: 'Role',
     field: 'role',
     value: (value) => value?.role ?? '',
+    filter: {
+      active: true,
+      value: '',
+      options: ROLE_CONFIG
+    }
   },
   {
     name: 'Created At',

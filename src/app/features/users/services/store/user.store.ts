@@ -23,9 +23,10 @@ export class UserStore {
     total: 0,
   });
 
-  loadUsers({search, page = 1, limit = 20}: Partial<UserFiltersType> = {}): Observable<UserResponse> {
+  loadUsers({search, role, page = 1, limit = 20}: Partial<UserFiltersType> = {}): Observable<UserResponse> {
     const params = new HttpParams()
       .set('search', search ?? '')
+      .set('role', role ?? '')
       .set('page', page)
       .set('limit', limit);
 

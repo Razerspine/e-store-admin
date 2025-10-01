@@ -22,5 +22,6 @@ export const buildUserTable = (
     value: data(),
     selection: selectedUsers,
     dataKey: 'userId',
+    globalFilterFields: ['role']
   };
 };

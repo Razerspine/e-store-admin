@@ -2,7 +2,7 @@ import {Component, computed, inject, signal} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {TableCaptionComponent, TemplateTableComponent} from '@app/shared';
 import {ConfirmPopup} from 'primeng/confirmpopup';
-import {TableModule, TablePageEvent} from 'primeng/table';
+import {TableFilterEvent, TableModule, TablePageEvent} from 'primeng/table';
 import {buildUserTable, USER_TABLE_CONFIG, UserColumnType, UserFacade, UserType} from '@features/users';
 import {UserTableActions} from './user-table-actions.service';
 import {TableConfigType} from '@core/models';
@@ -51,5 +51,9 @@ export class UserListComponent {
 
   onSearch(event: string) {
     this.facade.loadUsers({search: event});
+  }
+
+  onFilter(event: TableFilterEvent, field: string) {
+    this.facade.loadUsers({[field]: event, search: this.searchInput.value!});
   }
 }
