@@ -7,13 +7,7 @@ import {InputText} from 'primeng/inputtext';
 import {Select} from 'primeng/select';
 import {ToggleSwitch} from 'primeng/toggleswitch';
 import {Button} from 'primeng/button';
-import {
-  FormatFormData, ProductFacade,
-  ProductFormService,
-  ProductFormType,
-  productMapper,
-  ProductType
-} from '@features/products';
+import {fromForm, toForm, ProductFacade, ProductFormService, ProductType} from '@features/products';
 import {SharedDataService} from '@core/services';
 
 @Component({
@@ -61,14 +55,13 @@ export class ProductDetailComponent {
   }
 
   patchForm(data: ProductType): void {
-    const formData = productMapper(data, true) as ProductFormType;
+    const formData = toForm(data);
     this.form?.patchValue(formData);
     console.log("AFTER PATCH: ", this.form.value);
   }
 
   save(): void {
-    const formData = FormatFormData(this.form);
-    const product = productMapper(formData, false) as Partial<ProductType>;
+    const product = fromForm(this.form.value);
     if (this.productUuid()) {
       this.facade.updateProduct(this.productUuid()!, product);
     } else {

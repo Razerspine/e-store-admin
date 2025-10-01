@@ -17,4 +17,3 @@ export * from './mappers/product.mapper';
 
 export * from './utils/get-table-config';
 export * from './utils/build-product-table';
-export * from './utils/format-form-data';

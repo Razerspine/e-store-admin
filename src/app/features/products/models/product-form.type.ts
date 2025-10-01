@@ -4,6 +4,6 @@ export type ProductFormType = {
   category: string;
   price: Array<Record<string, number>>;
   sku: string;
-  image: { url: string; publicId: string };
+  image?: { url: string; publicId: string } | null;
   isActive: boolean;
 };

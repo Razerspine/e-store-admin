@@ -1,14 +1,36 @@
 import {arrayToObject, objectToArray} from '@core/utils';
 import {ProductFormType, ProductType} from '@features/products';
 
-export const productMapper = (data: ProductType | ProductFormType, toForm: boolean = false): ProductType | ProductFormType => {
+export const toForm = (data: ProductType): ProductFormType => {
   return {
-    name: toForm ? objectToArray((data as ProductType).name) : arrayToObject((data as ProductFormType).name),
-    description: toForm ? objectToArray((data as ProductType).description) : arrayToObject((data as ProductFormType).description),
+    name: objectToArray(data.name),
+    description: objectToArray(data.description),
     category: data.category,
-    price: toForm ? objectToArray((data as ProductType).price) : arrayToObject((data as ProductFormType).price),
+    price: objectToArray(data.price),
     sku: data.sku,
-    image: data.image?.url && data.image?.publicId ? data.image : null,
+    image: data.image,
     isActive: data.isActive,
-  } as ProductType | ProductFormType;
-}
+  }
+};
+
+export const fromForm = (data: ProductFormType): Partial<ProductType> => {
+  return {
+    name: arrayToObject(data.name),
+    description: arrayToObject(data.description),
+    category: data.category,
+    price: arrayToObject(data.price),
+    sku: data.sku,
+    image: normalizeImage(data.image),
+    isActive: data.isActive,
+  }
+};
+
+
+const normalizeImage = (img: { url: string; publicId: string } | null | undefined) => {
+  if (img && img.url?.length > 0) {
+    return img;
+  } else {
+    return null;
+  }
+};
+
