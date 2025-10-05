@@ -35,6 +35,9 @@
       />
     </p-icon-field>
     <div class="auth-form-row">
+      <p-select [options]="roles()" formControlName="role" size="large" fluid/>
+    </div>
+    <div class="auth-form-row">
       <p-button type="submit" class="button" label="Submit" size="large" [disabled]="form.invalid"/>
     </div>
   </form>
