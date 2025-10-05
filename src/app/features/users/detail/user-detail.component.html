@@ -20,7 +20,11 @@
     <div class="form-group">
       <div class="form-col">
         <label class="form-group-label">Role</label>
-        <p-select [options]="roles()" formControlName="role" size="large" fluid/>
+        @if (form.get('role')?.value === 'super_admin') {
+          <input pInputText type="text" readonly formControlName="role" pSize="large" fluid>
+        } @else {
+          <p-select [options]="roles()" formControlName="role" size="large" fluid/>
+        }
       </div>
       <div class="form-col">
         <label class="form-group-label">Language</label>
