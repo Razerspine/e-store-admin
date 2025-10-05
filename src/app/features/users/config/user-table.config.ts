@@ -1,6 +1,6 @@
 import {UserColumnType} from '@features/users';
 import {DatePipe} from '@angular/common';
-import {DATE_CONFIG, ROLE_CONFIG} from '@core/configs';
+import {DATE_CONFIG} from '@core/configs';
 
 const datePipe = new DatePipe('en-US');
 
@@ -22,7 +22,7 @@ export const USER_TABLE_CONFIG: UserColumnType[] = [
     filter: {
       active: true,
       value: '',
-      options: ROLE_CONFIG
+      options: ['admin', 'user', 'super_admin']
     }
   },
   {
