@@ -9,7 +9,6 @@ export * from './services/product-form.service';
 
 export * from './models/product.type';
 export * from './models/product-form.type';
-export * from './models/product-table-config.type';
 export * from './models/product-column.type';
 export * from './models/product-filters.type';
 
