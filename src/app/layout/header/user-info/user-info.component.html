@@ -1,6 +1,10 @@
 @if (user()) {
   <div class="menu-wrapper">
     <div class="menu-row">
+      <span class="menu-title">ID: </span>
+      <span class="menu-text">{{ user()?.userId }}</span>
+    </div>
+    <div class="menu-row">
       <span class="menu-title">Email: </span>
       <span class="menu-text">{{ user()?.email }}</span>
     </div>
