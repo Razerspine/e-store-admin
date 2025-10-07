@@ -23,9 +23,9 @@ export class SharedDataService {
   fallBackCategories: CategoryType[] = CATEGORIES_CONFIG;
   data: WritableSignal<ShareDataType> = signal({
     languages: this.fallBackLanguages,
-    defaultLanguage: this.fallBackLanguages[0],
+    defaultLanguage: this.fallBackLanguages.find(l => l.isDefault)!,
     currencies: this.fallBackCurrencies,
-    defaultCurrency: this.fallBackCurrencies[0],
+    defaultCurrency: this.fallBackCurrencies.find(c => c.isDefault)!,
     categories: this.fallBackCategories
   });
 
@@ -62,8 +62,8 @@ export class SharedDataService {
       currencies: currencies$,
       categories: categories$,
     }).subscribe(({languages, currencies, categories}) => {
-      const defaultLanguage = languages.find(lang => lang.isDefault) ?? this.fallBackLanguages[0];
-      const defaultCurrency = currencies.find(curr => curr.isDefault) ?? this.fallBackCurrencies[0];
+      const defaultLanguage = languages.find(lang => lang.isDefault) ?? this.fallBackLanguages.find(l => l.isDefault)!;
+      const defaultCurrency = currencies.find(curr => curr.isDefault) ?? this.fallBackCurrencies.find(c => c.isDefault)!;
       this.data.set({
         languages,
         defaultLanguage,
