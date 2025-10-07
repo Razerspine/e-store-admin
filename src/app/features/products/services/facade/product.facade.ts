@@ -15,6 +15,7 @@ export class ProductFacade {
 
   products = this.store.products;
   paginator = this.store.paginator;
+  isLoading = this.store.isLoading;
 
   loadProducts(filters: Partial<ProductFiltersType>): void {
     this.store.loadProducts(filters).subscribe({

@@ -28,6 +28,7 @@ export class UserListComponent {
       this.facade.users,
       this.selectedUsers,
       this.onPageChange.bind(this),
+      this.facade.isLoading
     )
   );
 

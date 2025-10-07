@@ -1,7 +1,7 @@
 import {inject, Injectable, signal} from '@angular/core';
 import {ProductApiService, ProductFiltersType, ProductType} from '@features/products';
 import {PaginatorType} from '@core/models';
-import {Observable, tap} from 'rxjs';
+import {finalize, Observable, tap} from 'rxjs';
 import {HttpParams} from '@angular/common/http';
 
 type ProductResponse = {
@@ -21,6 +21,7 @@ export class ProductStore {
     pages: 0,
     total: 0,
   });
+  isLoading = signal<boolean>(false);
 
   loadProducts(
     {
@@ -30,6 +31,7 @@ export class ProductStore {
       limit = 20
     }: Partial<ProductFiltersType> = {}
   ): Observable<ProductResponse> {
+    this.isLoading.set(true);
     const params = new HttpParams()
       .set('search', search ?? '')
       .set('active', active ?? true)
@@ -40,6 +42,9 @@ export class ProductStore {
         tap((response) => {
           this.products.set(response?.items ?? []);
           this.paginator.set(response?.meta);
+        }),
+        finalize(() => {
+          this.isLoading.set(false);
         })
       )
   }

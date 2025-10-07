@@ -15,6 +15,7 @@ export class UserFacade {
 
   users = this.store.users;
   paginator = this.store.paginator;
+  isLoading = this.store.isLoading;
 
   loadUsers(filters: Partial<UserFiltersType>) {
     this.store.loadUsers(filters).subscribe({

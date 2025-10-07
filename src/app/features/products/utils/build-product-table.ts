@@ -9,7 +9,8 @@ export const buildProductTable = (
   pagination: Signal<PaginatorType>,
   data: Signal<ProductType[]>,
   selectedProducts: WritableSignal<ProductType[]>,
-  onPage: (event: TablePageEvent) => void
+  onPage: (event: TablePageEvent) => void,
+  loading: WritableSignal<boolean>
 ): TableConfigType<ProductType, ProductColumnType> => {
   return {
     columns,
@@ -22,6 +23,7 @@ export const buildProductTable = (
     rowsPerPageOptions: [5, 10, 20, 50],
     value: data(),
     selection: selectedProducts,
-    dataKey: 'uuid'
+    dataKey: 'uuid',
+    loading: loading()
   };
 }

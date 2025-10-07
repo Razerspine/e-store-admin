@@ -8,7 +8,8 @@ export const buildUserTable = (
   pagination: Signal<PaginatorType>,
   data: Signal<UserType[]>,
   selectedUsers: WritableSignal<UserType[]>,
-  onPage: (event: TablePageEvent) => void
+  onPage: (event: TablePageEvent) => void,
+  loading: WritableSignal<boolean>,
 ): TableConfigType<UserType, UserColumnType> => {
   return {
     columns,
@@ -22,6 +23,7 @@ export const buildUserTable = (
     value: data(),
     selection: selectedUsers,
     dataKey: 'userId',
-    globalFilterFields: ['role']
+    globalFilterFields: ['role'],
+    loading: loading()
   };
 };

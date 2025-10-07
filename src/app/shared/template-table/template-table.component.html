@@ -1,5 +1,6 @@
 <div class="table-container">
   <p-table
+    [loading]="config().loading"
     [tableStyle]="{ 'min-width': '100%' }"
     [columns]="config().columns"
     [paginator]="config().paginator"

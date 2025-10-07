@@ -32,7 +32,13 @@ export class ProductListComponent {
   selectedProducts: WritableSignal<ProductType[]> = signal([]);
   searchInput = new FormControl('');
   tableConfig = computed<TableConfigType<ProductType, ProductColumnType>>(() =>
-    buildProductTable(this.columns, this.pagination, this.data, this.selectedProducts, this.onPageChange.bind(this))
+    buildProductTable(
+      this.columns,
+      this.pagination,
+      this.data,
+      this.selectedProducts,
+      this.onPageChange.bind(this),
+      this.facade.isLoading)
   );
 
   constructor() {

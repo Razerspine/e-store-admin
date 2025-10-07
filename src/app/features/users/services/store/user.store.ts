@@ -1,6 +1,6 @@
 import {inject, Injectable, signal} from '@angular/core';
 import {UserApiService, UserFiltersType, UserType} from '@features/users';
-import {Observable, tap} from 'rxjs';
+import {finalize, Observable, tap} from 'rxjs';
 import {HttpParams} from '@angular/common/http';
 import {PaginatorType} from '@core/models';
 
@@ -22,8 +22,10 @@ export class UserStore {
     pages: 0,
     total: 0,
   });
+  isLoading = signal<boolean>(false);
 
   loadUsers({search, role, page = 1, limit = 20}: Partial<UserFiltersType> = {}): Observable<UserResponse> {
+    this.isLoading.set(true);
     const params = new HttpParams()
       .set('search', search ?? '')
       .set('role', role ?? '')
@@ -34,6 +36,9 @@ export class UserStore {
       tap((response) => {
         this.users.set(response.items ?? []);
         this.paginator.set(response?.meta);
+      }),
+      finalize(() => {
+        this.isLoading.set(false);
       })
     );
   }

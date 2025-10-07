@@ -13,4 +13,5 @@ export type TableConfigType<T, C> = {
   selection?: WritableSignal<T[]>;
   dataKey?: string;
   globalFilterFields?: string[];
+  loading?: boolean;
 };
